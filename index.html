@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Acrewire</title>
+  <style>
+    body { font-family: Arial; max-width: 1000px; margin: auto; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+    a { text-decoration: none; color: black; }
+    .red { color: red; font-weight: bold; }
+    .bold { font-weight: bold; }
+    .source { font-size: 11px; color: gray; }
+  </style>
+</head>
+<body>
+
+<h1>Acrewire</h1>
+
+<div id="content" class="grid"></div>
+
+<script>
+fetch("/data/links.json")
+  .then(res => res.json())
+  .then(data => {
+    const content = document.getElementById("content");
+
+    Object.keys(data).forEach(section => {
+      const div = document.createElement("div");
+
+      div.innerHTML =
+        `<h3>${section.toUpperCase()}</h3>` +
+        data[section].map(item => `
+          <div>
+            <a href="${item.url}" target="_blank" class="${item.style || ""}">
+              ${item.title}
+            </a>
+            <span class="source"> — ${item.source || ""}</span>
+          </div>
+        `).join("");
+
+      content.appendChild(div);
+    });
+  });
+</script>
+
+</body>
+</html>
