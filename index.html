@@ -6,37 +6,95 @@
   <title>Acrewire</title>
   <style>
     body { font-family: Arial, Helvetica, sans-serif; max-width: 1020px; margin: 14px auto; padding: 0 10px; }
-    header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
-    h1 { margin: 0; font-size: 36px; letter-spacing: 0.5px; }
+
+    /* Drudge-ish title block */
+    header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+    .masthead { display: flex; flex-direction: column; gap: 2px; }
+    .brand {
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .brand-sub {
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #444;
+    }
     .updated { font-size: 12px; color: #555; white-space: nowrap; }
-    .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-    .col { min-width: 0; }
-    h2 { margin: 10px 0 6px; font-size: 12px; letter-spacing: 1px; }
+
+    /* Top links strip */
+    .topstrip {
+      border-top: 2px solid #111;
+      border-bottom: 1px solid #111;
+      padding: 8px 0;
+      margin: 6px 0 12px;
+    }
+    .topstrip .item { margin: 4px 0; }
+
+    /* Columns + divider lines */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;                 /* no gap so dividers look clean */
+      border-top: 1px solid #ccc;
+    }
+    .col {
+      min-width: 0;
+      padding: 0 12px 12px;
+    }
+    .col + .col {
+      border-left: 1px solid #ccc;  /* vertical divider between columns */
+    }
+
+    h2 { margin: 12px 0 6px; font-size: 12px; letter-spacing: 1px; }
+
     .item { margin: 6px 0; line-height: 1.15; }
-    a { text-decoration: none; color: #000; }
+
+    /* Drudge-like link feel: bold + underline by default */
+    a { color: #000; font-weight: 700; text-decoration: underline; }
     a:hover { text-decoration: underline; }
-    .red { color: red; font-weight: 700; }
-    .bold { font-weight: 700; }
+
+    .red { color: red; } /* keep bold/underline from default a */
+    .bold { font-weight: 900; }
+
     .meta { font-size: 11px; color: #666; }
     .tag { margin-right: 4px; }
     .error { color: red; white-space: pre-wrap; font-size: 13px; }
-    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } header { flex-direction: column; align-items: flex-start; } }
+
+    @media (max-width: 900px) {
+      header { flex-direction: column; align-items: flex-start; }
+      .grid { grid-template-columns: 1fr; gap: 0; }
+      .col { padding: 0 0 12px; }
+      .col + .col { border-left: none; border-top: 1px solid #ccc; padding-top: 12px; }
+    }
   </style>
 </head>
+
 <body>
   <header>
-    <h1>Acrewire</h1>
+    <div class="masthead">
+      <div class="brand">ACREWIRE</div>
+      <div class="brand-sub">AG NEWS • MARKETS • WATER • POLICY</div>
+    </div>
     <div class="updated" id="updated"></div>
   </header>
+
+  <!-- Top 3–5 links go here -->
+  <div class="topstrip">
+    <div id="toplinks"></div>
+  </div>
 
   <div id="status" class="meta">Loading…</div>
   <div id="content" class="grid" style="display:none;"></div>
 
   <script>
-    // 1) PASTE your Google Sheet CSV URL here:
+    // 1) Google Sheet CSV URL:
     const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR-3xml3CAOrMcVTmr4tkQ5R1gjsnxd2fuRh2u8I0ucXHLdcjMHzs43Jxmu-mcGXGv6qTMA6mar_7Qm/pub?output=csv";
 
-    // 2) Your homepage sections (exactly as you requested)
+    // 2) Sections
     const SECTIONS = [
       "Almonds","Pistachios","Walnuts",
       "Citrus","Avocados","Table Grapes",
@@ -46,7 +104,7 @@
       "Water","Policy"
     ];
 
-    // 3) 3-column layout mapping (edit this anytime to reorder the site)
+    // 3) 3-column layout mapping
     const COLUMNS = [
       ["Almonds","Pistachios","Walnuts","Citrus","Avocados","Row Crops"],
       ["Table Grapes","Wine Grapes","Raisins","Prunes","Blueberries","Cherries","Apples"],
@@ -59,6 +117,7 @@
 
     const statusEl = document.getElementById("status");
     const contentEl = document.getElementById("content");
+    const topLinksEl = document.getElementById("toplinks");
 
     main().catch(err => {
       statusEl.className = "error";
@@ -98,13 +157,36 @@
       const bySection = {};
       for (const s of SECTIONS) bySection[s] = [];
       for (const it of items) {
-        // Allow case-insensitive match to your section names
         const matched = SECTIONS.find(s => s.toLowerCase() === it.section.toLowerCase());
         if (matched) bySection[matched].push(it);
       }
       for (const s of SECTIONS) bySection[s].sort((a,b) => a.rank - b.rank);
 
-      // Render 3 columns
+      // Topstrip: first 3–5 from "Policy"?? (Better: dedicated section named "Top")
+      // We'll use a section called "Top" if present; otherwise take top ranked from Water+Policy+Land+Almonds.
+      const topCandidates = [];
+      if (bySection["Policy"]) topCandidates.push(...bySection["Policy"]);
+      if (bySection["Water"]) topCandidates.push(...bySection["Water"]);
+      if (bySection["Land"]) topCandidates.push(...bySection["Land"]);
+      if (bySection["Almonds"]) topCandidates.push(...bySection["Almonds"]);
+
+      // Sort candidates by rank, then pick up to 5
+      topCandidates.sort((a,b) => a.rank - b.rank);
+      const topList = topCandidates.slice(0, 5);
+
+      topLinksEl.innerHTML = topList.length
+        ? topList.map(item => `
+            <div class="item">
+              <a class="${item.style === "red" ? "red" : (item.style === "bold" ? "bold" : "")}"
+                 href="${escapeAttr(item.url)}" target="_blank" rel="noreferrer">
+                 ${escapeHtml(item.headline)}
+              </a>
+              <span class="meta"> ${item.source ? "— " + escapeHtml(item.source) : ""}</span>
+            </div>
+          `).join("")
+        : `<div class="meta">—</div>`;
+
+      // Render 3 columns with divider lines
       contentEl.innerHTML = "";
       for (const colSections of COLUMNS) {
         const col = document.createElement("div");
