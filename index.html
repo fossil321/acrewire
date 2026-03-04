@@ -176,6 +176,7 @@ padding-top:12px;
 const SHEET_CSV_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vR-3xml3CAOrMcVTmr4tkQ5R1gjsnxd2fuRh2u8I0ucXHLdcjMHzs43Jxmu-mcGXGv6qTMA6mar_7Qm/pub?output=csv"
 
 const SECTIONS=[
+"Top",
 "Almonds","Pistachios","Walnuts",
 "Citrus","Avocados","Table Grapes",
 "Wine Grapes","Raisins","Prunes",
@@ -246,17 +247,9 @@ for(const s of SECTIONS){
 bySection[s].sort((a,b)=>a.rank-b.rank)
 }
 
-/* TOP LINKS */
+/* TOP LINKS — ONLY FROM TOP SECTION */
 
-const topCandidates=[]
-
-for(const s of["Water","Policy","Land","Almonds"]){
-if(bySection[s])topCandidates.push(...bySection[s])
-}
-
-topCandidates.sort((a,b)=>a.rank-b.rank)
-
-const topList=topCandidates.slice(0,5)
+const topList=(bySection["Top"]||[]).slice(0,5)
 
 topLinksEl.innerHTML=topList.map(item=>`
 
