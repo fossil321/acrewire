@@ -9,9 +9,9 @@
 
 body{
 font-family: Arial, Helvetica, sans-serif;
-max-width:1320px;
-margin:14px auto;
-padding:0 10px;
+max-width:1800px;
+margin:10px auto;
+padding:0 30px;
 }
 
 /* MASTHEAD */
@@ -29,7 +29,7 @@ flex-direction:column;
 }
 
 .brand{
-font-size:44px;
+font-size:46px;
 font-weight:900;
 letter-spacing:2px;
 text-transform:uppercase;
@@ -47,7 +47,7 @@ font-size:12px;
 color:#555;
 }
 
-/* TOP HEADLINES */
+/* TOP LINKS */
 
 .topstrip{
 border-top:2px solid #111;
@@ -64,12 +64,12 @@ margin:5px 0;
 
 .grid{
 display:grid;
-grid-template-columns:1.3fr 1fr 1fr;
+grid-template-columns:1fr 1fr 1fr;
 border-top:1px solid #ccc;
 }
 
 .col{
-padding:0 12px 14px;
+padding:0 16px 14px;
 }
 
 .col + .col{
@@ -88,14 +88,14 @@ letter-spacing:1px;
 
 .item{
 margin:6px 0;
-line-height:1.2;
+line-height:1.25;
 }
 
 a{
 color:#000;
 font-weight:700;
 text-decoration:underline;
-font-size:13px;
+font-size:14px;
 }
 
 a:hover{
@@ -127,7 +127,7 @@ font-size:13px;
 
 /* MOBILE */
 
-@media(max-width:900px){
+@media(max-width:1000px){
 
 .grid{
 grid-template-columns:1fr;
@@ -342,8 +342,6 @@ const i=idx[key]
 return(i===undefined?"":(r[i]||"")).trim()
 
 }
-
-/* CSV PARSER */
 
 function parseCSV(text){
 
