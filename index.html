@@ -162,14 +162,8 @@ header{
 </div>
 
 <script>
-/*
-IMPORTANT:
-Use the published CSV link from Google Sheets, not the normal share link.
 
-It should look like:
-https://docs.google.com/spreadsheets/d/e/XXXXXXXX/pub?gid=0&single=true&output=csv
-*/
-const SHEET_CSV_URL = "PASTE_YOUR_PUBLISHED_CSV_URL_HERE";
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR-3xml3CAOrMcVTmr4tkQ5R1gjsnxd2fuRh2u8I0ucXHLdcjMHzs43Jxmu-mcGXGv6qTMA6mar_7Qm/pub?output=csv";
 
 const categories = [
   "Top",
@@ -194,196 +188,137 @@ const categories = [
 
 function parseCSV(text) {
   const rows = [];
-  let row = [];
-  let cell = "";
-  let inQuotes = false;
+  const lines = text.split("\n");
 
-  for (let i = 0; i < text.length; i++) {
-    const char = text[i];
-    const next = text[i + 1];
-
-    if (char === '"') {
-      if (inQuotes && next === '"') {
-        cell += '"';
-        i++;
-      } else {
-        inQuotes = !inQuotes;
-      }
-    } else if (char === "," && !inQuotes) {
-      row.push(cell);
-      cell = "";
-    } else if ((char === "\n" || char === "\r") && !inQuotes) {
-      if (char === "\r" && next === "\n") i++;
-      row.push(cell);
-      rows.push(row);
-      row = [];
-      cell = "";
-    } else {
-      cell += char;
-    }
-  }
-
-  if (cell.length > 0 || row.length > 0) {
-    row.push(cell);
-    rows.push(row);
+  for (let line of lines) {
+    rows.push(line.split(","));
   }
 
   return rows;
 }
 
-function cleanText(value) {
-  return String(value || "")
-    .replace(/^\uFEFF/, "")   // remove BOM
-    .replace(/\u00A0/g, " ")  // replace non-breaking spaces
-    .trim();
-}
-
-function normalizeSection(value) {
-  return cleanText(value).toLowerCase();
-}
-
 function csvToObjects(csvText) {
-  const rows = parseCSV(csvText).filter(r => r.some(cell => cleanText(cell) !== ""));
-  if (!rows.length) return [];
 
-  const headers = rows[0].map(h => cleanText(h).toLowerCase());
+  const rows = parseCSV(csvText);
 
-  return rows.slice(1).map(row => {
-    const obj = {};
-    headers.forEach((header, i) => {
-      obj[header] = cleanText(row[i] || "");
+  const headers = rows[0].map(h => h.trim().toLowerCase());
+
+  const items = [];
+
+  for (let i=1;i<rows.length;i++){
+
+    const row = rows[i];
+
+    if(!row || row.length < 4) continue;
+
+    items.push({
+      section: row[0].trim(),
+      rank: row[1].trim(),
+      headline: row[2].trim(),
+      url: row[3].trim()
     });
-    return obj;
-  });
-}
 
-function isValidUrl(url) {
-  const value = cleanText(url);
-  return /^https?:\/\//i.test(value);
-}
-
-function sortByRank(items) {
-  return [...items].sort((a, b) => {
-    const rankA = Number(a.rank);
-    const rankB = Number(b.rank);
-    const safeA = Number.isFinite(rankA) ? rankA : 9999;
-    const safeB = Number.isFinite(rankB) ? rankB : 9999;
-    return safeA - safeB;
-  });
-}
-
-function getItemsForSection(allItems, sectionName) {
-  return sortByRank(
-    allItems.filter(item =>
-      normalizeSection(item.section) === normalizeSection(sectionName) &&
-      cleanText(item.headline) !== ""
-    )
-  );
-}
-
-function renderTopStory(items) {
-  const topContainer = document.getElementById("top-story");
-  const topItems = getItemsForSection(items, "Top");
-
-  if (!topItems.length) {
-    topContainer.innerHTML = "";
-    return;
   }
 
-  const top = topItems[0];
-  const headline = cleanText(top.headline);
-  const url = cleanText(top.url);
+  return items;
 
-  if (isValidUrl(url)) {
-    topContainer.innerHTML = `<a href="${url}" target="_blank" rel="noopener noreferrer">${headline}</a>`;
-  } else {
-    topContainer.innerHTML = `<span>${headline}</span>`;
-  }
 }
 
-function buildSectionHTML(title, items) {
-  const sectionItems = getItemsForSection(items, title);
+function sortByRank(items){
+
+  return items.sort((a,b)=>Number(a.rank)-Number(b.rank));
+
+}
+
+function renderTopStory(items){
+
+  const top = items
+    .filter(x=>x.section==="Top")
+    .sort((a,b)=>Number(a.rank)-Number(b.rank))[0];
+
+  if(!top) return;
+
+  const el = document.getElementById("top-story");
+
+  el.innerHTML = `<a href="${top.url}" target="_blank">${top.headline}</a>`;
+
+}
+
+function buildSectionHTML(title,items){
+
+  const sectionItems = sortByRank(items.filter(x=>x.section===title));
 
   let html = `
-    <div class="section">
-      <div class="section-title">${title}</div>
-      <ul>
+  <div class="section">
+  <div class="section-title">${title}</div>
+  <ul>
   `;
 
-  if (!sectionItems.length) {
-    html += `<li>&nbsp;</li>`;
-  } else {
-    sectionItems.forEach(item => {
-      const headline = cleanText(item.headline);
-      const url = cleanText(item.url);
+  for(let item of sectionItems){
 
-      if (isValidUrl(url)) {
-        html += `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${headline}</a></li>`;
-      } else {
-        html += `<li>${headline}</li>`;
-      }
-    });
+    html += `<li><a href="${item.url}" target="_blank">${item.headline}</a></li>`;
+
   }
 
   html += `
-      </ul>
-    </div>
+  </ul>
+  </div>
   `;
+
   return html;
+
 }
 
-function chunkIntoColumns(arr, numberOfColumns) {
-  const columns = Array.from({ length: numberOfColumns }, () => []);
-  arr.forEach((item, index) => {
-    columns[index % numberOfColumns].push(item);
-  });
-  return columns;
+function chunkIntoColumns(arr,num){
+
+  const cols = Array.from({length:num},()=>[]);
+
+  arr.forEach((item,i)=>cols[i%num].push(item));
+
+  return cols;
+
 }
 
-function renderPage(items) {
+function renderPage(items){
+
   renderTopStory(items);
 
-  const nonTopCategories = categories.filter(cat => cat !== "Top");
-  const columnGroups = chunkIntoColumns(nonTopCategories, 3);
+  const sections = categories.filter(x=>x!=="Top");
+
+  const columns = chunkIntoColumns(sections,3);
 
   const content = document.getElementById("content");
-  content.innerHTML = "";
 
-  columnGroups.forEach(group => {
-    const col = document.createElement("div");
-    col.className = "column";
-    col.innerHTML = group.map(cat => buildSectionHTML(cat, items)).join("");
+  content.innerHTML="";
+
+  columns.forEach(group=>{
+
+    const col=document.createElement("div");
+
+    col.className="column";
+
+    col.innerHTML = group.map(cat=>buildSectionHTML(cat,items)).join("");
+
     content.appendChild(col);
+
   });
+
 }
 
-async function loadSheetData() {
-  try {
-    const response = await fetch(SHEET_CSV_URL, {
-      method: "GET",
-      cache: "no-store"
-    });
+async function loadSheet(){
 
-    if (!response.ok) {
-      throw new Error("Could not load published CSV");
-    }
+  const response = await fetch(SHEET_CSV_URL);
 
-    const csvText = await response.text();
-    const items = csvToObjects(csvText);
+  const csv = await response.text();
 
-    console.log("Loaded items:", items);
+  const items = csvToObjects(csv);
 
-    renderPage(items);
-  } catch (err) {
-    console.error("Sheet load error:", err);
-    document.getElementById("top-story").innerHTML = "";
-    document.getElementById("content").innerHTML = `
-      <div class="error">Unable to load stories right now.</div>
-    `;
-  }
+  renderPage(items);
+
 }
 
-loadSheetData();
+loadSheet();
+
 </script>
 
 </body>
