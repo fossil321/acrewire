@@ -8,138 +8,140 @@
 <style>
 body{
   font-family: Arial, Helvetica, sans-serif;
-  max-width: 1800px;
-  margin: 10px auto;
-  padding: 0 20px;
-  background: #fff;
-  color: #000;
+  max-width:1800px;
+  margin:10px auto;
+  padding:0 20px;
+  background:#fff;
+  color:#000;
 }
 
 header{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-  text-align: center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:10px;
+  text-align:center;
 }
 
 .masthead{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 
 .brand{
-  font-size: 52px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 4px;
+  font-size:52px;
+  font-weight:900;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-bottom:4px;
 }
 
 .tagline{
-  font-size: 15px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-bottom: 12px;
+  font-size:15px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  margin-bottom:12px;
 }
 
 .top-story{
-  width: 100%;
-  text-align: center;
-  margin: 8px 0 18px 0;
-  min-height: 28px;
+  width:100%;
+  text-align:center;
+  margin:8px 0 18px 0;
+  min-height:28px;
 }
 
-.top-story a{
-  font-size: 28px;
-  font-weight: 800;
-  text-decoration: none;
-  color: #000;
-  line-height: 1.2;
+.top-story a,
+.top-story span{
+  font-size:28px;
+  font-weight:800;
+  text-decoration:none;
+  color:#000;
+  line-height:1.2;
 }
 
 .top-story a:hover{
-  text-decoration: underline;
+  text-decoration:underline;
 }
 
 .grid{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-  width: 100%;
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:18px;
+  width:100%;
 }
 
 .column{
-  border-top: 2px solid #000;
-  padding-top: 8px;
+  border-top:2px solid #000;
+  padding-top:8px;
 }
 
 .section{
-  margin-bottom: 18px;
+  margin-bottom:18px;
 }
 
 .section-title{
-  font-size: 20px;
-  font-weight: 800;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-  border-bottom: 1px solid #bbb;
-  padding-bottom: 4px;
+  font-size:20px;
+  font-weight:800;
+  text-transform:uppercase;
+  margin-bottom:8px;
+  border-bottom:1px solid #bbb;
+  padding-bottom:4px;
 }
 
 .section ul{
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  list-style:none;
+  padding:0;
+  margin:0;
 }
 
 .section li{
-  margin: 0 0 8px 0;
-  line-height: 1.25;
-  font-size: 16px;
-  font-weight: 700;
+  margin:0 0 8px 0;
+  line-height:1.25;
+  font-size:16px;
+  font-weight:700;
 }
 
 .section a{
-  color: #000;
-  text-decoration: none;
+  color:#000;
+  text-decoration:none;
 }
 
 .section a:hover{
-  text-decoration: underline;
+  text-decoration:underline;
 }
 
 .loading{
-  font-size: 16px;
-  color: #666;
+  font-size:16px;
+  color:#666;
 }
 
 .error{
-  color: #b00020;
-  font-weight: 700;
-  text-align: center;
-  margin-top: 20px;
+  color:#b00020;
+  font-weight:700;
+  text-align:center;
+  margin-top:20px;
 }
 
-@media (max-width: 1100px){
+@media (max-width:1100px){
   .grid{
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:repeat(2, 1fr);
   }
 }
 
-@media (max-width: 700px){
+@media (max-width:700px){
   .grid{
-    grid-template-columns: 1fr;
+    grid-template-columns:1fr;
   }
 
   .brand{
-    font-size: 40px;
+    font-size:40px;
   }
 
-  .top-story a{
-    font-size: 22px;
+  .top-story a,
+  .top-story span{
+    font-size:22px;
   }
 }
 </style>
@@ -160,7 +162,14 @@ header{
 </div>
 
 <script>
-const SHEET_CSV_URL = "YOUR_GOOGLE_SHEET_CSV_URL_HERE";
+/*
+IMPORTANT:
+Use the published CSV link from Google Sheets, not the normal share link.
+
+It should look like:
+https://docs.google.com/spreadsheets/d/e/XXXXXXXX/pub?gid=0&single=true&output=csv
+*/
+const SHEET_CSV_URL = "PASTE_YOUR_PUBLISHED_CSV_URL_HERE";
 
 const categories = [
   "Top",
@@ -200,11 +209,11 @@ function parseCSV(text) {
       } else {
         inQuotes = !inQuotes;
       }
-    } else if (char === ',' && !inQuotes) {
+    } else if (char === "," && !inQuotes) {
       row.push(cell);
       cell = "";
-    } else if ((char === '\n' || char === '\r') && !inQuotes) {
-      if (char === '\r' && next === '\n') i++;
+    } else if ((char === "\n" || char === "\r") && !inQuotes) {
+      if (char === "\r" && next === "\n") i++;
       row.push(cell);
       rows.push(row);
       row = [];
@@ -222,35 +231,59 @@ function parseCSV(text) {
   return rows;
 }
 
+function cleanText(value) {
+  return String(value || "")
+    .replace(/^\uFEFF/, "")   // remove BOM
+    .replace(/\u00A0/g, " ")  // replace non-breaking spaces
+    .trim();
+}
+
+function normalizeSection(value) {
+  return cleanText(value).toLowerCase();
+}
+
 function csvToObjects(csvText) {
-  const rows = parseCSV(csvText).filter(r => r.some(cell => String(cell).trim() !== ""));
+  const rows = parseCSV(csvText).filter(r => r.some(cell => cleanText(cell) !== ""));
   if (!rows.length) return [];
 
-  const headers = rows[0].map(h => h.trim().toLowerCase());
+  const headers = rows[0].map(h => cleanText(h).toLowerCase());
 
   return rows.slice(1).map(row => {
     const obj = {};
     headers.forEach((header, i) => {
-      obj[header] = (row[i] || "").trim();
+      obj[header] = cleanText(row[i] || "");
     });
     return obj;
   });
 }
 
-function normalizeSectionName(name) {
-  return String(name || "").trim().toLowerCase();
+function isValidUrl(url) {
+  const value = cleanText(url);
+  return /^https?:\/\//i.test(value);
 }
 
-function isValidUrl(url) {
-  return /^https?:\/\//i.test(String(url || "").trim());
+function sortByRank(items) {
+  return [...items].sort((a, b) => {
+    const rankA = Number(a.rank);
+    const rankB = Number(b.rank);
+    const safeA = Number.isFinite(rankA) ? rankA : 9999;
+    const safeB = Number.isFinite(rankB) ? rankB : 9999;
+    return safeA - safeB;
+  });
+}
+
+function getItemsForSection(allItems, sectionName) {
+  return sortByRank(
+    allItems.filter(item =>
+      normalizeSection(item.section) === normalizeSection(sectionName) &&
+      cleanText(item.headline) !== ""
+    )
+  );
 }
 
 function renderTopStory(items) {
   const topContainer = document.getElementById("top-story");
-  const topItems = items
-    .filter(item => normalizeSectionName(item.section) === "top")
-    .filter(item => item.headline)
-    .sort((a, b) => Number(a.rank || 9999) - Number(b.rank || 9999));
+  const topItems = getItemsForSection(items, "Top");
 
   if (!topItems.length) {
     topContainer.innerHTML = "";
@@ -258,18 +291,18 @@ function renderTopStory(items) {
   }
 
   const top = topItems[0];
-  if (isValidUrl(top.url)) {
-    topContainer.innerHTML = `<a href="${top.url}" target="_blank" rel="noopener noreferrer">${top.headline}</a>`;
+  const headline = cleanText(top.headline);
+  const url = cleanText(top.url);
+
+  if (isValidUrl(url)) {
+    topContainer.innerHTML = `<a href="${url}" target="_blank" rel="noopener noreferrer">${headline}</a>`;
   } else {
-    topContainer.textContent = top.headline;
+    topContainer.innerHTML = `<span>${headline}</span>`;
   }
 }
 
 function buildSectionHTML(title, items) {
-  const sectionItems = items
-    .filter(item => normalizeSectionName(item.section) === normalizeSectionName(title))
-    .filter(item => item.headline)
-    .sort((a, b) => Number(a.rank || 9999) - Number(b.rank || 9999));
+  const sectionItems = getItemsForSection(items, title);
 
   let html = `
     <div class="section">
@@ -277,19 +310,17 @@ function buildSectionHTML(title, items) {
       <ul>
   `;
 
-  if (title === "Top") {
-    html += `</ul></div>`;
-    return html;
-  }
-
   if (!sectionItems.length) {
     html += `<li>&nbsp;</li>`;
   } else {
     sectionItems.forEach(item => {
-      if (isValidUrl(item.url)) {
-        html += `<li><a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.headline}</a></li>`;
+      const headline = cleanText(item.headline);
+      const url = cleanText(item.url);
+
+      if (isValidUrl(url)) {
+        html += `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${headline}</a></li>`;
       } else {
-        html += `<li>${item.headline}</li>`;
+        html += `<li>${headline}</li>`;
       }
     });
   }
@@ -328,19 +359,27 @@ function renderPage(items) {
 
 async function loadSheetData() {
   try {
-    const response = await fetch(SHEET_CSV_URL, { cache: "no-store" });
-    if (!response.ok) throw new Error("Could not load sheet");
+    const response = await fetch(SHEET_CSV_URL, {
+      method: "GET",
+      cache: "no-store"
+    });
+
+    if (!response.ok) {
+      throw new Error("Could not load published CSV");
+    }
 
     const csvText = await response.text();
     const items = csvToObjects(csvText);
 
+    console.log("Loaded items:", items);
+
     renderPage(items);
   } catch (err) {
+    console.error("Sheet load error:", err);
+    document.getElementById("top-story").innerHTML = "";
     document.getElementById("content").innerHTML = `
       <div class="error">Unable to load stories right now.</div>
     `;
-    document.getElementById("top-story").innerHTML = "";
-    console.error(err);
   }
 }
 
