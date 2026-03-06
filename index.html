@@ -6,7 +6,6 @@
 <title>AcreWire</title>
 
 <style>
-
 body{
   font-family: Arial, Helvetica, sans-serif;
   max-width:1800px;
@@ -46,8 +45,6 @@ header{
   margin-bottom:12px;
 }
 
-/* TOP STORY */
-
 .top-story{
   width:100%;
   text-align:center;
@@ -62,13 +59,13 @@ header{
   text-decoration:none;
   color:#000;
   line-height:1.2;
+  overflow-wrap:break-word;
+  word-wrap:break-word;
 }
 
 .top-story a:hover{
   text-decoration:underline;
 }
-
-/* GRID */
 
 .grid{
   display:grid;
@@ -77,11 +74,10 @@ header{
   width:100%;
 }
 
-/* COLUMN WITH DIVIDERS */
-
 .column{
   border-right:1px solid #ccc;
   padding:0 18px;
+  box-sizing:border-box;
 }
 
 .column:last-child{
@@ -107,18 +103,22 @@ header{
   margin:0;
 }
 
-/* LINKS */
-
 .section li{
-  margin:0 0 12px 0;
-  line-height:1.35;
+  margin:0 0 14px 0;
+  line-height:1.4;
   font-size:15px;
   font-weight:700;
+  overflow-wrap:break-word;
+  word-wrap:break-word;
+  word-break:normal;
 }
 
 .section a{
   color:#000;
   text-decoration:none;
+  display:inline;
+  overflow-wrap:break-word;
+  word-wrap:break-word;
 }
 
 .section a:hover{
@@ -137,20 +137,28 @@ header{
   margin-top:20px;
 }
 
-/* RESPONSIVE */
-
 @media (max-width:1100px){
-
   .grid{
     grid-template-columns:repeat(2, 1fr);
   }
 
+  .column:nth-child(2){
+    border-right:none;
+  }
+
+  .column:nth-child(odd){
+    border-right:1px solid #ccc;
+  }
 }
 
 @media (max-width:700px){
-
   .grid{
     grid-template-columns:1fr;
+  }
+
+  .column{
+    border-right:none !important;
+    padding:0;
   }
 
   .brand{
@@ -161,199 +169,238 @@ header{
   .top-story span{
     font-size:22px;
   }
-
 }
-
 </style>
 </head>
 <body>
 
 <header>
-
-<div class="masthead">
-
-<div class="brand">ACREWIRE</div>
-
-<div class="tagline">
-Land • Agriculture • Energy • Markets
-</div>
-
-</div>
-
+  <div class="masthead">
+    <div class="brand">ACREWIRE</div>
+    <div class="tagline">Land • Agriculture • Energy • Markets</div>
+  </div>
 </header>
 
 <div id="top-story" class="top-story"></div>
 
 <div id="content" class="grid">
-
-<div class="loading">Loading...</div>
-
+  <div class="loading">Loading...</div>
 </div>
 
 <script>
-
 const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR-3xml3CAOrMcVTmr4tkQ5R1gjsnxd2fuRh2u8I0ucXHLdcjMHzs43Jxmu-mcGXGv6qTMA6mar_7Qm/pub?output=csv";
 
 const categories = [
-
-"Top",
-"Row Crops",
-"Permanent Crops",
-"Global Agriculture",
-"Ag Policy",
-"Ag Technology",
-"Fertilizer & Chemicals",
-"Farmland",
-"Water",
-"Commodities",
-"Markets",
-"Residential Real Estate",
-"Commercial Real Estate",
-"Land & Development",
-"Energy",
-"Renewable Energy",
-"Infrastructure",
-"Real Asset Investing"
-
+  "Top",
+  "Row Crops",
+  "Permanent Crops",
+  "Global Agriculture",
+  "Ag Policy",
+  "Ag Technology",
+  "Fertilizer & Chemicals",
+  "Farmland",
+  "Water",
+  "Commodities",
+  "Markets",
+  "Residential Real Estate",
+  "Commercial Real Estate",
+  "Land & Development",
+  "Energy",
+  "Renewable Energy",
+  "Infrastructure",
+  "Real Asset Investing"
 ];
 
-function parseCSV(text){
+function parseCSV(text) {
+  const rows = [];
+  let row = [];
+  let cell = "";
+  let inQuotes = false;
 
-const rows=[];
-const lines=text.split("\n");
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    const next = text[i + 1];
 
-for(let line of lines){
+    if (char === '"') {
+      if (inQuotes && next === '"') {
+        cell += '"';
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (char === "," && !inQuotes) {
+      row.push(cell);
+      cell = "";
+    } else if ((char === "\n" || char === "\r") && !inQuotes) {
+      if (char === "\r" && next === "\n") i++;
+      row.push(cell);
+      rows.push(row);
+      row = [];
+      cell = "";
+    } else {
+      cell += char;
+    }
+  }
 
-rows.push(line.split(","));
+  if (cell.length > 0 || row.length > 0) {
+    row.push(cell);
+    rows.push(row);
+  }
 
+  return rows;
 }
 
-return rows;
-
+function cleanText(value) {
+  return String(value || "")
+    .replace(/^\uFEFF/, "")
+    .replace(/\u00A0/g, " ")
+    .trim();
 }
 
-function csvToObjects(csvText){
-
-const rows=parseCSV(csvText);
-
-const items=[];
-
-for(let i=1;i<rows.length;i++){
-
-const row=rows[i];
-
-if(!row || row.length<4) continue;
-
-items.push({
-
-section:row[0].trim(),
-rank:row[1].trim(),
-headline:row[2].trim(),
-url:row[3].trim()
-
-});
-
+function normalizeSection(value) {
+  return cleanText(value).toLowerCase();
 }
 
-return items;
+function csvToObjects(csvText) {
+  const rows = parseCSV(csvText).filter(r => r.some(cell => cleanText(cell) !== ""));
+  if (!rows.length) return [];
 
+  const headers = rows[0].map(h => cleanText(h).toLowerCase());
+
+  return rows.slice(1).map(row => {
+    const obj = {};
+    headers.forEach((header, i) => {
+      obj[header] = cleanText(row[i] || "");
+    });
+    return obj;
+  });
 }
 
-function sortByRank(items){
-
-return items.sort((a,b)=>Number(a.rank)-Number(b.rank));
-
+function isValidUrl(url) {
+  const value = cleanText(url);
+  return /^https?:\/\//i.test(value);
 }
 
-function renderTopStory(items){
-
-const top = items
-.filter(x=>x.section==="Top")
-.sort((a,b)=>Number(a.rank)-Number(b.rank))[0];
-
-if(!top) return;
-
-const el=document.getElementById("top-story");
-
-el.innerHTML=`<a href="${top.url}" target="_blank">${top.headline}</a>`;
-
+function sortByRank(items) {
+  return [...items].sort((a, b) => {
+    const rankA = Number(a.rank);
+    const rankB = Number(b.rank);
+    const safeA = Number.isFinite(rankA) ? rankA : 9999;
+    const safeB = Number.isFinite(rankB) ? rankB : 9999;
+    return safeA - safeB;
+  });
 }
 
-function buildSectionHTML(title,items){
-
-const sectionItems=sortByRank(items.filter(x=>x.section===title));
-
-let html=`
-<div class="section">
-<div class="section-title">${title}</div>
-<ul>
-`;
-
-for(let item of sectionItems){
-
-html+=`<li><a href="${item.url}" target="_blank">${item.headline}</a></li>`;
-
+function getItemsForSection(allItems, sectionName) {
+  return sortByRank(
+    allItems.filter(item =>
+      normalizeSection(item.section) === normalizeSection(sectionName) &&
+      cleanText(item.headline) !== ""
+    )
+  );
 }
 
-html+=`
-</ul>
-</div>
-`;
+function renderTopStory(items) {
+  const topContainer = document.getElementById("top-story");
+  const topItems = getItemsForSection(items, "Top");
 
-return html;
+  if (!topItems.length) {
+    topContainer.innerHTML = "";
+    return;
+  }
 
+  const top = topItems[0];
+  const headline = cleanText(top.headline);
+  const url = cleanText(top.url);
+
+  if (isValidUrl(url)) {
+    topContainer.innerHTML = `<a href="${url}" target="_blank" rel="noopener noreferrer">${headline}</a>`;
+  } else {
+    topContainer.innerHTML = `<span>${headline}</span>`;
+  }
 }
 
-function chunkIntoColumns(arr,num){
+function buildSectionHTML(title, items) {
+  const sectionItems = getItemsForSection(items, title);
 
-const cols=Array.from({length:num},()=>[]);
+  let html = `
+    <div class="section">
+      <div class="section-title">${title}</div>
+      <ul>
+  `;
 
-arr.forEach((item,i)=>cols[i%num].push(item));
+  if (!sectionItems.length) {
+    html += `<li>&nbsp;</li>`;
+  } else {
+    sectionItems.forEach(item => {
+      const headline = cleanText(item.headline);
+      const url = cleanText(item.url);
 
-return cols;
+      if (isValidUrl(url)) {
+        html += `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${headline}</a></li>`;
+      } else {
+        html += `<li>${headline}</li>`;
+      }
+    });
+  }
 
+  html += `
+      </ul>
+    </div>
+  `;
+  return html;
 }
 
-function renderPage(items){
-
-renderTopStory(items);
-
-const sections=categories.filter(x=>x!=="Top");
-
-const columns=chunkIntoColumns(sections,3);
-
-const content=document.getElementById("content");
-
-content.innerHTML="";
-
-columns.forEach(group=>{
-
-const col=document.createElement("div");
-
-col.className="column";
-
-col.innerHTML=group.map(cat=>buildSectionHTML(cat,items)).join("");
-
-content.appendChild(col);
-
-});
-
+function chunkIntoColumns(arr, numberOfColumns) {
+  const columns = Array.from({ length: numberOfColumns }, () => []);
+  arr.forEach((item, index) => {
+    columns[index % numberOfColumns].push(item);
+  });
+  return columns;
 }
 
-async function loadSheet(){
+function renderPage(items) {
+  renderTopStory(items);
 
-const response=await fetch(SHEET_CSV_URL);
+  const nonTopCategories = categories.filter(cat => cat !== "Top");
+  const columnGroups = chunkIntoColumns(nonTopCategories, 3);
 
-const csv=await response.text();
+  const content = document.getElementById("content");
+  content.innerHTML = "";
 
-const items=csvToObjects(csv);
-
-renderPage(items);
-
+  columnGroups.forEach(group => {
+    const col = document.createElement("div");
+    col.className = "column";
+    col.innerHTML = group.map(cat => buildSectionHTML(cat, items)).join("");
+    content.appendChild(col);
+  });
 }
 
-loadSheet();
+async function loadSheetData() {
+  try {
+    const response = await fetch(SHEET_CSV_URL, {
+      method: "GET",
+      cache: "no-store"
+    });
 
+    if (!response.ok) {
+      throw new Error("Could not load published CSV");
+    }
+
+    const csvText = await response.text();
+    const items = csvToObjects(csvText);
+
+    renderPage(items);
+  } catch (err) {
+    console.error("Sheet load error:", err);
+    document.getElementById("top-story").innerHTML = "";
+    document.getElementById("content").innerHTML = `
+      <div class="error">Unable to load stories right now.</div>
+    `;
+  }
+}
+
+loadSheetData();
 </script>
 
 </body>
