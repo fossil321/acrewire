@@ -3,420 +3,348 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Acrewire</title>
+<title>AcreWire</title>
 
 <style>
-
 body{
-font-family: Arial, Helvetica, sans-serif;
-max-width:1800px;
-margin:10px auto;
-padding:0 30px;
+  font-family: Arial, Helvetica, sans-serif;
+  max-width: 1800px;
+  margin: 10px auto;
+  padding: 0 20px;
+  background: #fff;
+  color: #000;
 }
 
-/* MASTHEAD */
-
 header{
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-margin-bottom:6px;
-text-align:center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .masthead{
-display:flex;
-flex-direction:column;
-align-items:center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .brand{
-font-size:46px;
-font-weight:900;
-letter-spacing:2px;
-text-transform:uppercase;
+  font-size: 52px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
 }
 
-.brand-sub{
-font-size:11px;
-letter-spacing:1px;
-text-transform:uppercase;
-color:#444;
-margin-top:2px;
+.tagline{
+  font-size: 15px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
 }
 
-.updated{
-font-size:12px;
-color:#555;
-margin-top:4px;
+.top-story{
+  width: 100%;
+  text-align: center;
+  margin: 8px 0 18px 0;
+  min-height: 28px;
 }
 
-/* TOP LINKS */
-
-.topstrip{
-border-top:2px solid #111;
-border-bottom:1px solid #111;
-padding:10px 0;
-margin:6px 0 14px;
-text-align:center;
+.top-story a{
+  font-size: 28px;
+  font-weight: 800;
+  text-decoration: none;
+  color: #000;
+  line-height: 1.2;
 }
 
-.topstrip .item{
-margin:8px 0;
+.top-story a:hover{
+  text-decoration: underline;
 }
-
-.topstrip a{
-font-size:18px;
-line-height:1.35;
-}
-
-/* GRID */
 
 .grid{
-display:grid;
-grid-template-columns:1fr 1fr 1fr;
-border-top:1px solid #ccc;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  width: 100%;
 }
 
-.col{
-padding:0 16px 14px;
+.column{
+  border-top: 2px solid #000;
+  padding-top: 8px;
 }
 
-.col + .col{
-border-left:1px solid #ccc;
+.section{
+  margin-bottom: 18px;
 }
 
-/* SECTIONS */
-
-section{
-padding-bottom:14px;
-margin-bottom:16px;
-border-bottom:1px solid #d8d8d8;
+.section-title{
+  font-size: 20px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #bbb;
+  padding-bottom: 4px;
 }
 
-section:last-child{
-border-bottom:none;
-margin-bottom:0;
-padding-bottom:0;
+.section ul{
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-h2{
-margin:16px 0 10px;
-font-size:13px;
-letter-spacing:1px;
-font-weight:900;
-border-top:1px solid #eee;
-padding-top:8px;
+.section li{
+  margin: 0 0 8px 0;
+  line-height: 1.25;
+  font-size: 16px;
+  font-weight: 700;
 }
 
-/* LINKS */
-
-.item{
-margin:10px 0 14px;
-line-height:1.35;
+.section a{
+  color: #000;
+  text-decoration: none;
 }
 
-a{
-color:#000;
-font-weight:700;
-text-decoration:underline;
-font-size:13px;
+.section a:hover{
+  text-decoration: underline;
 }
 
-a:hover{
-text-decoration:underline;
-}
-
-.red{
-color:red;
-}
-
-.bold{
-font-weight:900;
-}
-
-.meta{
-display:block;
-font-size:11px;
-color:#666;
-margin-top:3px;
-}
-
-.tag{
-margin-right:4px;
+.loading{
+  font-size: 16px;
+  color: #666;
 }
 
 .error{
-color:red;
-white-space:pre-wrap;
-font-size:13px;
+  color: #b00020;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 20px;
 }
 
-/* MOBILE */
-
-@media(max-width:1000px){
-
-.grid{
-grid-template-columns:1fr;
+@media (max-width: 1100px){
+  .grid{
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.col + .col{
-border-left:none;
-border-top:1px solid #ccc;
-padding-top:12px;
-}
+@media (max-width: 700px){
+  .grid{
+    grid-template-columns: 1fr;
+  }
 
-section{
-margin-bottom:18px;
-padding-bottom:14px;
-}
+  .brand{
+    font-size: 40px;
+  }
 
+  .top-story a{
+    font-size: 22px;
+  }
 }
-
 </style>
 </head>
-
 <body>
 
 <header>
-
-<div class="masthead">
-<div class="brand">ACREWIRE</div>
-<div class="brand-sub">AG NEWS • WATER • MARKETS • POLICY</div>
-</div>
-
-<div class="updated" id="updated"></div>
-
+  <div class="masthead">
+    <div class="brand">ACREWIRE</div>
+    <div class="tagline">AG NEWS, WATER, MARKETS, REAL ASSETS</div>
+  </div>
 </header>
 
-<div class="topstrip">
-<div id="toplinks"></div>
+<div id="top-story" class="top-story"></div>
+
+<div id="content" class="grid">
+  <div class="loading">Loading...</div>
 </div>
-
-<div id="status" class="meta">Loading…</div>
-
-<div id="content" class="grid" style="display:none;"></div>
 
 <script>
+const SHEET_CSV_URL = "YOUR_GOOGLE_SHEET_CSV_URL_HERE";
 
-const SHEET_CSV_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vR-3xml3CAOrMcVTmr4tkQ5R1gjsnxd2fuRh2u8I0ucXHLdcjMHzs43Jxmu-mcGXGv6qTMA6mar_7Qm/pub?output=csv"
+const categories = [
+  "Top",
+  "Row Crops",
+  "Permanent Crops",
+  "Global Agriculture",
+  "Ag Policy",
+  "Ag Technology",
+  "Fertilizer & Chemicals",
+  "Farmland",
+  "Water",
+  "Commodities",
+  "Markets",
+  "Residential Real Estate",
+  "Commercial Real Estate",
+  "Land & Development",
+  "Energy",
+  "Renewable Energy",
+  "Infrastructure",
+  "Real Asset Investing"
+];
 
-const SECTIONS=[
-"Top",
-"Row Crops",
-"Almonds","Pistachios","Walnuts",
-"Citrus","Avocados",
-"Table Grapes","Wine Grapes",
-"Raisins","Prunes",
-"Blueberries","Cherries","Apples",
-"Hazelnuts","Land","Water","Policy"
-]
+function parseCSV(text) {
+  const rows = [];
+  let row = [];
+  let cell = "";
+  let inQuotes = false;
 
-const COLUMNS=[
-["Row Crops","Almonds","Pistachios","Walnuts","Citrus","Avocados"],
-["Table Grapes","Wine Grapes","Raisins","Prunes","Blueberries","Cherries","Apples"],
-["Hazelnuts","Land","Water","Policy"]
-]
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    const next = text[i + 1];
 
-document.getElementById("updated").textContent=
-"Updated: "+
-new Date().toLocaleString("en-US",{timeZone:"America/Los_Angeles"})+
-" PT"
+    if (char === '"') {
+      if (inQuotes && next === '"') {
+        cell += '"';
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (char === ',' && !inQuotes) {
+      row.push(cell);
+      cell = "";
+    } else if ((char === '\n' || char === '\r') && !inQuotes) {
+      if (char === '\r' && next === '\n') i++;
+      row.push(cell);
+      rows.push(row);
+      row = [];
+      cell = "";
+    } else {
+      cell += char;
+    }
+  }
 
-const statusEl=document.getElementById("status")
-const contentEl=document.getElementById("content")
-const topLinksEl=document.getElementById("toplinks")
+  if (cell.length > 0 || row.length > 0) {
+    row.push(cell);
+    rows.push(row);
+  }
 
-main().catch(err=>{
-statusEl.className="error"
-statusEl.textContent="ERROR: "+(err?.message||err)
-})
-
-async function main(){
-
-const url=SHEET_CSV_URL+(SHEET_CSV_URL.includes("?")?"&":"?")+"v="+Date.now()
-
-const res=await fetch(url,{cache:"no-store"})
-
-if(!res.ok)throw new Error("Could not load Sheet CSV")
-
-const csvText=await res.text()
-
-const rows=parseCSV(csvText)
-
-const headers=rows[0].map(h=>h.trim().toLowerCase())
-const idx=Object.fromEntries(headers.map((h,i)=>[h,i]))
-
-const items=rows.slice(1)
-.map(r=>({
-
-section:pick(r,idx,"section"),
-rank:Number(pick(r,idx,"rank")),
-headline:pick(r,idx,"headline"),
-url:pick(r,idx,"url"),
-source:pick(r,idx,"source"),
-tag:pick(r,idx,"tag"),
-style:(pick(r,idx,"style")||"normal").toLowerCase(),
-active:(pick(r,idx,"active")||"").toUpperCase()==="TRUE"
-
-}))
-.filter(x=>x.active&&x.section&&x.headline&&x.url&&Number.isFinite(x.rank))
-
-const bySection={}
-for(const s of SECTIONS)bySection[s]=[]
-
-for(const it of items){
-const matched=SECTIONS.find(s=>s.toLowerCase()===it.section.toLowerCase())
-if(matched)bySection[matched].push(it)
+  return rows;
 }
 
-for(const s of SECTIONS){
-bySection[s].sort((a,b)=>a.rank-b.rank)
+function csvToObjects(csvText) {
+  const rows = parseCSV(csvText).filter(r => r.some(cell => String(cell).trim() !== ""));
+  if (!rows.length) return [];
+
+  const headers = rows[0].map(h => h.trim().toLowerCase());
+
+  return rows.slice(1).map(row => {
+    const obj = {};
+    headers.forEach((header, i) => {
+      obj[header] = (row[i] || "").trim();
+    });
+    return obj;
+  });
 }
 
-/* TOP LINKS */
-
-const topList=(bySection["Top"]||[]).slice(0,5)
-
-topLinksEl.innerHTML=topList.map(item=>`
-
-<div class="item">
-
-<a class="${item.style}" href="${escapeAttr(item.url)}" target="_blank">
-
-${escapeHtml(item.headline)}
-
-</a>
-
-<span class="meta">
-
-${item.source? "— "+escapeHtml(item.source):""}
-
-</span>
-
-</div>
-
-`).join("")
-
-/* COLUMNS */
-
-contentEl.innerHTML=""
-
-for(const colSections of COLUMNS){
-
-const col=document.createElement("div")
-
-col.className="col"
-
-for(const sectionName of colSections){
-
-const list=bySection[sectionName]||[]
-
-const sec=document.createElement("section")
-
-sec.innerHTML=`
-<h2>${sectionName.toUpperCase()}</h2>
-${list.length?list.map(renderItem).join(""):`<div class="meta">—</div>`}
-`
-
-col.appendChild(sec)
-
+function normalizeSectionName(name) {
+  return String(name || "").trim().toLowerCase();
 }
 
-contentEl.appendChild(col)
-
+function isValidUrl(url) {
+  return /^https?:\/\//i.test(String(url || "").trim());
 }
 
-statusEl.textContent=""
-contentEl.style.display="grid"
+function renderTopStory(items) {
+  const topContainer = document.getElementById("top-story");
+  const topItems = items
+    .filter(item => normalizeSectionName(item.section) === "top")
+    .filter(item => item.headline)
+    .sort((a, b) => Number(a.rank || 9999) - Number(b.rank || 9999));
 
+  if (!topItems.length) {
+    topContainer.innerHTML = "";
+    return;
+  }
+
+  const top = topItems[0];
+  if (isValidUrl(top.url)) {
+    topContainer.innerHTML = `<a href="${top.url}" target="_blank" rel="noopener noreferrer">${top.headline}</a>`;
+  } else {
+    topContainer.textContent = top.headline;
+  }
 }
 
-function renderItem(item){
+function buildSectionHTML(title, items) {
+  const sectionItems = items
+    .filter(item => normalizeSectionName(item.section) === normalizeSectionName(title))
+    .filter(item => item.headline)
+    .sort((a, b) => Number(a.rank || 9999) - Number(b.rank || 9999));
 
-const tag=item.tag?`<span class="tag">[${escapeHtml(item.tag)}]</span>`:""
-const source=item.source?`— ${escapeHtml(item.source)}`:""
+  let html = `
+    <div class="section">
+      <div class="section-title">${title}</div>
+      <ul>
+  `;
 
-return`
+  if (title === "Top") {
+    html += `</ul></div>`;
+    return html;
+  }
 
-<div class="item">
+  if (!sectionItems.length) {
+    html += `<li>&nbsp;</li>`;
+  } else {
+    sectionItems.forEach(item => {
+      if (isValidUrl(item.url)) {
+        html += `<li><a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.headline}</a></li>`;
+      } else {
+        html += `<li>${item.headline}</li>`;
+      }
+    });
+  }
 
-<a class="${item.style}" href="${escapeAttr(item.url)}" target="_blank">
-
-${escapeHtml(item.headline)}
-
-</a>
-
-<span class="meta">${tag}${source}</span>
-
-</div>
-
-`
-
+  html += `
+      </ul>
+    </div>
+  `;
+  return html;
 }
 
-function pick(r,idx,key){
-
-const i=idx[key]
-
-return(i===undefined?"":(r[i]||"")).trim()
-
+function chunkIntoColumns(arr, numberOfColumns) {
+  const columns = Array.from({ length: numberOfColumns }, () => []);
+  arr.forEach((item, index) => {
+    columns[index % numberOfColumns].push(item);
+  });
+  return columns;
 }
 
-function parseCSV(text){
+function renderPage(items) {
+  renderTopStory(items);
 
-const rows=[]
-let row=[]
-let cur=""
-let inQuotes=false
+  const nonTopCategories = categories.filter(cat => cat !== "Top");
+  const columnGroups = chunkIntoColumns(nonTopCategories, 3);
 
-for(let i=0;i<text.length;i++){
+  const content = document.getElementById("content");
+  content.innerHTML = "";
 
-const c=text[i]
-const next=text[i+1]
-
-if(inQuotes){
-
-if(c=='"'&&next=='"'){cur+='"';i++}
-else if(c=='"'){inQuotes=false}
-else{cur+=c}
-
-}else{
-
-if(c=='"')inQuotes=true
-else if(c==","){row.push(cur);cur=""}
-else if(c=="\n"){row.push(cur);rows.push(row);row=[];cur=""}
-else if(c!="\r"){cur+=c}
-
+  columnGroups.forEach(group => {
+    const col = document.createElement("div");
+    col.className = "column";
+    col.innerHTML = group.map(cat => buildSectionHTML(cat, items)).join("");
+    content.appendChild(col);
+  });
 }
 
+async function loadSheetData() {
+  try {
+    const response = await fetch(SHEET_CSV_URL, { cache: "no-store" });
+    if (!response.ok) throw new Error("Could not load sheet");
+
+    const csvText = await response.text();
+    const items = csvToObjects(csvText);
+
+    renderPage(items);
+  } catch (err) {
+    document.getElementById("content").innerHTML = `
+      <div class="error">Unable to load stories right now.</div>
+    `;
+    document.getElementById("top-story").innerHTML = "";
+    console.error(err);
+  }
 }
 
-row.push(cur)
-rows.push(row)
-
-return rows.filter(r=>r.some(x=>x.trim()!=""))
-
-}
-
-function escapeHtml(s){
-
-return(s||"")
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#39;")
-
-}
-
-function escapeAttr(s){
-
-return escapeHtml(s).replaceAll(" ","%20")
-
-}
-
+loadSheetData();
 </script>
 
 </body>
