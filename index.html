@@ -204,16 +204,17 @@ const SHEET_CSV_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vR-3xml3CAO
 
 const SECTIONS=[
 "Top",
+"Row Crops",
 "Almonds","Pistachios","Walnuts",
-"Citrus","Avocados","Table Grapes",
-"Wine Grapes","Raisins","Prunes",
+"Citrus","Avocados",
+"Table Grapes","Wine Grapes",
+"Raisins","Prunes",
 "Blueberries","Cherries","Apples",
-"Hazelnuts","Row Crops","Land",
-"Water","Policy"
+"Hazelnuts","Land","Water","Policy"
 ]
 
 const COLUMNS=[
-["Almonds","Pistachios","Walnuts","Citrus","Avocados","Row Crops"],
+["Row Crops","Almonds","Pistachios","Walnuts","Citrus","Avocados"],
 ["Table Grapes","Wine Grapes","Raisins","Prunes","Blueberries","Cherries","Apples"],
 ["Hazelnuts","Land","Water","Policy"]
 ]
@@ -274,7 +275,7 @@ for(const s of SECTIONS){
 bySection[s].sort((a,b)=>a.rank-b.rank)
 }
 
-/* TOP LINKS — ONLY FROM TOP SECTION */
+/* TOP LINKS */
 
 const topList=(bySection["Top"]||[]).slice(0,5)
 
