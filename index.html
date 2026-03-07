@@ -41,7 +41,6 @@ header{
   letter-spacing:4px;
   text-transform:uppercase;
   margin-bottom:6px;
-
   background:linear-gradient(90deg,#1f4e2c,#3b7a3b);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
@@ -155,6 +154,16 @@ header{
 
 .section a:hover{
   text-decoration:underline;
+}
+
+/* STORY IMAGE */
+
+.story-image{
+  display:block;
+  width:100%;
+  height:auto;
+  margin:0 0 8px 0;
+  border-radius:4px;
 }
 
 /* LOADING */
@@ -278,10 +287,11 @@ function csvToObjects(csvText){
     if(!row || row.length<4) continue;
 
     items.push({
-      section:row[0].trim(),
-      rank:row[1].trim(),
-      headline:row[2].trim(),
-      url:row[3].trim()
+      section: row[0] ? row[0].trim() : "",
+      rank: row[1] ? row[1].trim() : "",
+      headline: row[2] ? row[2].trim() : "",
+      url: row[3] ? row[3].trim() : "",
+      image: row[4] ? row[4].trim() : ""
     });
 
   }
@@ -319,7 +329,14 @@ function buildSectionHTML(title,items){
   `;
 
   for(let item of sectionItems){
-    html+=`<li><a href="${item.url}" target="_blank">${item.headline}</a></li>`;
+
+    html+=`<li>`;
+
+    if(item.image){
+      html+=`<img src="${item.image}" alt="${item.headline}" class="story-image">`;
+    }
+
+    html+=`<a href="${item.url}" target="_blank">${item.headline}</a></li>`;
   }
 
   html+=`
