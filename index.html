@@ -78,7 +78,7 @@ header{
   grid-template-columns: 1fr minmax(420px, 720px) 1fr;
   gap:30px;
   align-items:start;
-  margin-bottom:38px; /* added more breathing room below top area */
+  margin-bottom:38px;
 }
 
 .top-left,
@@ -94,7 +94,7 @@ header{
 .top-story{
   width:100%;
   text-align:center;
-  margin-bottom:42px; /* extra space between top headline and categories */
+  margin-bottom:42px;
 }
 
 .top-story-image-wrap{
@@ -106,8 +106,8 @@ header{
 
 .top-story img{
   display:block;
-  width:108%;              /* slightly wider than middle column */
-  max-width:780px;         /* keeps it from getting too large */
+  width:108%;
+  max-width:780px;
   height:auto;
   object-fit:cover;
   margin:0 auto;
@@ -163,7 +163,7 @@ header{
 
 .story img{
   display:block;
-  width:100%;          /* fits inside category column */
+  width:100%;
   max-width:100%;
   height:auto;
   object-fit:cover;
@@ -253,18 +253,7 @@ header{
 </div>
 
 <script>
-/*
-  GOOGLE SHEET SETUP:
-  Publish your sheet as CSV, then paste the CSV link below.
-
-  Required columns in your sheet:
-  section, rank, headline, url, image_url
-
-  Example sections:
-  Top, Row Crops, Almonds, Pistachios, Water, Energy, Markets, Policy
-*/
-
-const SHEET_CSV_URL = 'PASTE_YOUR_PUBLISHED_CSV_URL_HERE';
+const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR-3xml3CAOrMcVTmr4tkQ5R1gjsnxd2fuRh2u8I0ucXHLdcjMHzs43Jxmu-mcGXGv6qTMA6mar_7Qm/pub?output=csv';
 
 const categoryOrder = [
   'Row Crops',
