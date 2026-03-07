@@ -1,29 +1,37 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>AcreWire</title>
 
 <style>
-
 body{
   font-family: Arial, Helvetica, sans-serif;
-  max-width:1800px;
-  margin:10px auto;
-  padding:0 20px;
+  max-width: 1800px;
+  margin: 10px auto;
+  padding: 0 30px;
+  color:#111;
   background:#fff;
-  color:#000;
 }
 
-/* HEADER */
+a{
+  color:#111;
+  text-decoration:none;
+}
+
+a:hover{
+  text-decoration:underline;
+}
+
+/* MASTHEAD */
 
 header{
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  margin-bottom:12px;
+  margin-bottom:10px;
   text-align:center;
 }
 
@@ -33,271 +41,272 @@ header{
   align-items:center;
 }
 
-/* ACREWIRE TITLE */
-
 .brand{
   font-size:56px;
   font-weight:900;
-  letter-spacing:4px;
+  letter-spacing:3px;
   text-transform:uppercase;
+  line-height:1;
   margin-bottom:6px;
-  background:linear-gradient(90deg,#1f4e2c,#3b7a3b);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
 }
 
-/* SUBTITLE */
+.brand a{
+  color:#111;
+  text-decoration:none;
+}
 
 .tagline{
-  font-size:15px;
-  letter-spacing:2px;
+  font-size:16px;
+  letter-spacing:1px;
   text-transform:uppercase;
-  margin-bottom:14px;
   color:#555;
-  font-weight:700;
+  margin-bottom:10px;
 }
 
-.tagline::before,
-.tagline::after{
-  content:"";
-  display:inline-block;
-  width:35px;
-  height:2px;
-  background:#3b7a3b;
-  margin:0 10px;
-  vertical-align:middle;
+.rule{
+  width:100%;
+  border-top:3px solid #111;
+  border-bottom:1px solid #111;
+  height:5px;
+  margin:8px 0 18px 0;
 }
 
-/* TOP STORY */
+/* TOP SECTION */
+
+.top-wrap{
+  display:grid;
+  grid-template-columns: 1fr minmax(420px, 720px) 1fr;
+  gap:30px;
+  align-items:start;
+  margin-bottom:38px; /* added more breathing room below top area */
+}
+
+.top-left,
+.top-right{
+  min-height:20px;
+}
+
+.top-center{
+  display:flex;
+  justify-content:center;
+}
 
 .top-story{
   width:100%;
   text-align:center;
-  margin:8px 0 20px 0;
-  min-height:28px;
+  margin-bottom:42px; /* extra space between top headline and categories */
 }
 
-.top-story a,
-.top-story span{
-  font-size:28px;
+.top-story-image-wrap{
+  display:flex;
+  justify-content:center;
+  margin:0 auto 14px auto;
+  overflow:visible;
+}
+
+.top-story img{
+  display:block;
+  width:108%;              /* slightly wider than middle column */
+  max-width:780px;         /* keeps it from getting too large */
+  height:auto;
+  object-fit:cover;
+  margin:0 auto;
+}
+
+.top-story h1{
+  font-size:34px;
+  line-height:1.15;
+  margin:0 0 10px 0;
   font-weight:800;
-  text-decoration:none;
-  color:#000;
-  line-height:1.2;
-  overflow-wrap:break-word;
 }
 
-.top-story a:hover{
+.top-story h1 a{
+  color:#111;
+  text-decoration:none;
+}
+
+.top-story h1 a:hover{
   text-decoration:underline;
 }
 
-.top-story .story-image{
-  max-width:100%;
-  width:100%;
-  height:auto;
-  display:block;
-  margin:0 0 10px 0;
-  border-radius:4px;
-}
+/* CATEGORY GRID */
 
-/* GRID */
-
-.grid{
+.sections{
   display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:0;
-  width:100%;
-}
-
-.column{
-  border-right:1px solid #ccc;
-  padding:0 18px;
-  box-sizing:border-box;
-}
-
-.column:last-child{
-  border-right:none;
+  grid-template-columns: repeat(3, 1fr);
+  gap:34px;
+  align-items:start;
 }
 
 .section{
-  margin-bottom:22px;
+  border-top:4px solid #111;
+  padding-top:10px;
 }
-
-/* CATEGORY HEADINGS */
 
 .section-title{
-  font-size:19px;
-  font-weight:900;
-  text-transform:uppercase;
-  margin-bottom:10px;
-  padding-bottom:4px;
-  color:#1f4e2c;
-  border-bottom:2px solid #3b7a3b;
-  letter-spacing:1px;
-}
-
-.section-title:hover{
-  color:#2e6a38;
-}
-
-.section ul{
-  list-style:none;
-  padding:0;
-  margin:0;
-}
-
-/* LINKS */
-
-.section li{
+  font-size:22px;
+  font-weight:800;
   margin:0 0 14px 0;
-  line-height:1.4;
-  font-size:15px;
-  font-weight:700;
-  overflow-wrap:break-word;
+  text-transform:uppercase;
+  letter-spacing:.5px;
 }
 
-.section a{
-  color:#000;
-  text-decoration:none;
+.story{
+  margin-bottom:18px;
 }
 
-.section a:hover{
-  text-decoration:underline;
-}
-
-/* STORY IMAGE */
-
-.story-image{
-  display:block;
+.story-image-wrap{
   width:100%;
-  height:auto;
   margin:0 0 8px 0;
-  border-radius:4px;
+  overflow:hidden;
 }
 
-/* LOADING */
-
-.loading{
-  font-size:16px;
-  color:#666;
+.story img{
+  display:block;
+  width:100%;          /* fits inside category column */
+  max-width:100%;
+  height:auto;
+  object-fit:cover;
 }
 
-.error{
-  color:#b00020;
+.story a{
+  font-size:17px;
+  line-height:1.35;
   font-weight:700;
+}
+
+.loading,
+.error,
+.empty{
+  font-size:18px;
+  color:#555;
   text-align:center;
-  margin-top:20px;
+  padding:20px 0;
 }
 
 /* RESPONSIVE */
 
-@media (max-width:1100px){
-
-  .grid{
-    grid-template-columns:repeat(2, 1fr);
+@media (max-width: 1200px){
+  .sections{
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .column:nth-child(2){
-    border-right:none;
+  .top-wrap{
+    grid-template-columns: 1fr;
+    gap:20px;
   }
 
+  .top-center{
+    order:1;
+  }
+
+  .top-left{
+    order:2;
+  }
+
+  .top-right{
+    order:3;
+  }
+
+  .top-story img{
+    width:100%;
+    max-width:100%;
+  }
 }
 
-@media (max-width:700px){
-
-  .grid{
-    grid-template-columns:1fr;
-  }
-
-  .column{
-    border-right:none !important;
-    padding:0;
+@media (max-width: 700px){
+  body{
+    padding:0 16px;
   }
 
   .brand{
-    font-size:44px;
+    font-size:40px;
   }
 
-  .top-story a,
-  .top-story span{
-    font-size:22px;
+  .top-story h1{
+    font-size:28px;
   }
 
+  .sections{
+    grid-template-columns: 1fr;
+  }
+
+  .section-title{
+    font-size:20px;
+  }
 }
-
 </style>
 </head>
 <body>
 
 <header>
   <div class="masthead">
-
-    <div class="brand">ACREWIRE</div>
-
-    <div class="tagline">
-      Land Agriculture Energy Markets
-    </div>
-
+    <div class="brand"><a href="#">ACREWIRE</a></div>
+    <div class="tagline">Land Agriculture Energy Markets</div>
   </div>
 </header>
 
-<div id="top-story" class="top-story"></div>
+<div class="rule"></div>
 
-<div id="content" class="grid">
+<div id="app">
   <div class="loading">Loading...</div>
 </div>
 
 <script>
+/*
+  GOOGLE SHEET SETUP:
+  Publish your sheet as CSV, then paste the CSV link below.
 
-const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR-3xml3CAOrMcVTmr4tkQ5R1gjsnxd2fuRh2u8I0ucXHLdcjMHzs43Jxmu-mcGXGv6qTMA6mar_7Qm/pub?output=csv";
+  Required columns in your sheet:
+  section, rank, headline, url, image_url
 
-const categories = [
-  "Top",
-  "Row Crops",
-  "Permanent Crops",
-  "Global Agriculture",
-  "Ag Policy",
-  "Ag Technology",
-  "Fertilizer & Chemicals",
-  "Farmland",
-  "Water",
-  "Commodities",
-  "Markets",
-  "Residential Real Estate",
-  "Commercial Real Estate",
-  "Land & Development",
-  "Energy",
-  "Renewable Energy",
-  "Infrastructure",
-  "Real Asset Investing"
+  Example sections:
+  Top, Row Crops, Almonds, Pistachios, Water, Energy, Markets, Policy
+*/
+
+const SHEET_CSV_URL = 'PASTE_YOUR_PUBLISHED_CSV_URL_HERE';
+
+const categoryOrder = [
+  'Row Crops',
+  'Almonds',
+  'Pistachios',
+  'Dairy',
+  'Cattle',
+  'Water',
+  'Energy',
+  'Markets',
+  'Policy',
+  'Land',
+  'Weather',
+  'International'
 ];
 
 function parseCSV(text){
   const rows = [];
   let row = [];
-  let cell = "";
+  let cell = '';
   let inQuotes = false;
 
   for(let i = 0; i < text.length; i++){
     const char = text[i];
-    const next = text[i + 1];
+    const nextChar = text[i + 1];
 
     if(char === '"'){
-      if(inQuotes && next === '"'){
+      if(inQuotes && nextChar === '"'){
         cell += '"';
         i++;
       } else {
         inQuotes = !inQuotes;
       }
-    } else if(char === "," && !inQuotes){
+    } else if(char === ',' && !inQuotes){
       row.push(cell);
-      cell = "";
-    } else if((char === "\n" || char === "\r") && !inQuotes){
-      if(char === "\r" && next === "\n") i++;
+      cell = '';
+    } else if((char === '\n' || char === '\r') && !inQuotes){
+      if(char === '\r' && nextChar === '\n') i++;
       row.push(cell);
-      rows.push(row);
+      if(row.some(v => v.trim() !== '')) rows.push(row);
       row = [];
-      cell = "";
+      cell = '';
     } else {
       cell += char;
     }
@@ -305,146 +314,148 @@ function parseCSV(text){
 
   if(cell.length > 0 || row.length > 0){
     row.push(cell);
-    rows.push(row);
+    if(row.some(v => v.trim() !== '')) rows.push(row);
   }
 
-  return rows;
-}
-
-function cleanText(value){
-  return String(value || "")
-    .replace(/^\uFEFF/, "")
-    .replace(/\u00A0/g, " ")
-    .trim();
-}
-
-function csvToObjects(csvText){
-
-  const rows = parseCSV(csvText).filter(r => r.some(cell => cleanText(cell) !== ""));
   if(!rows.length) return [];
 
-  const items = [];
-
-  for(let i = 1; i < rows.length; i++){
-    const row = rows[i];
-
-    if(!row || row.length < 4) continue;
-
-    items.push({
-      section: row[0] ? cleanText(row[0]) : "",
-      rank: row[1] ? cleanText(row[1]) : "",
-      headline: row[2] ? cleanText(row[2]) : "",
-      url: row[3] ? cleanText(row[3]) : "",
-      image: row[4] ? cleanText(row[4]) : ""
+  const headers = rows[0].map(h => h.trim().toLowerCase());
+  return rows.slice(1).map(r => {
+    const obj = {};
+    headers.forEach((h, idx) => {
+      obj[h] = (r[idx] || '').trim();
     });
+    return obj;
+  });
+}
+
+function normalizeSection(section){
+  return (section || '').trim();
+}
+
+function sortStories(stories){
+  return stories.sort((a, b) => {
+    const rankA = parseInt(a.rank || '999', 10);
+    const rankB = parseInt(b.rank || '999', 10);
+    return rankA - rankB;
+  });
+}
+
+function storyHTML(story, isTop = false){
+  const hasImage = story.image_url && story.image_url.trim() !== '';
+  const safeHeadline = escapeHTML(story.headline || '');
+  const safeURL = escapeAttr(story.url || '#');
+  const safeImage = escapeAttr(story.image_url || '');
+
+  if(isTop){
+    return `
+      <article class="top-story">
+        ${hasImage ? `
+          <div class="top-story-image-wrap">
+            <img src="${safeImage}" alt="${safeHeadline}" loading="lazy">
+          </div>
+        ` : ''}
+        <h1><a href="${safeURL}" target="_blank" rel="noopener noreferrer">${safeHeadline}</a></h1>
+      </article>
+    `;
   }
 
-  return items;
-}
-
-function sortByRank(items){
-  return [...items].sort((a,b)=>Number(a.rank)-Number(b.rank));
-}
-
-function renderTopStory(items){
-
-  const top = items
-    .filter(x=>x.section==="Top")
-    .sort((a,b)=>Number(a.rank)-Number(b.rank))[0];
-
-  if(!top) return;
-
-  const el = document.getElementById("top-story");
-
-  let html = "";
-
-  if(top.image){
-    html += `<img src="${top.image}" alt="${top.headline}" class="story-image">`;
-  }
-
-  html += `<a href="${top.url}" target="_blank" rel="noopener noreferrer">${top.headline}</a>`;
-
-  el.innerHTML = html;
-}
-
-function buildSectionHTML(title,items){
-
-  const sectionItems = sortByRank(items.filter(x=>x.section===title));
-
-  let html = `
-  <div class="section">
-  <div class="section-title">${title}</div>
-  <ul>
+  return `
+    <article class="story">
+      ${hasImage ? `
+        <div class="story-image-wrap">
+          <img src="${safeImage}" alt="${safeHeadline}" loading="lazy">
+        </div>
+      ` : ''}
+      <a href="${safeURL}" target="_blank" rel="noopener noreferrer">${safeHeadline}</a>
+    </article>
   `;
+}
 
-  for(let item of sectionItems){
+function escapeHTML(str){
+  return String(str)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
 
-    html += `<li>`;
+function escapeAttr(str){
+  return escapeHTML(str);
+}
 
-    if(item.image){
-      html += `<img src="${item.image}" alt="${item.headline}" class="story-image">`;
-    }
+function buildPage(data){
+  const app = document.getElementById('app');
 
-    html += `<a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.headline}</a></li>`;
+  if(!data.length){
+    app.innerHTML = '<div class="empty">No stories found.</div>';
+    return;
   }
 
-  html += `
-  </ul>
-  </div>
-  `;
-
-  return html;
-}
-
-function chunkIntoColumns(arr,num){
-
-  const cols = Array.from({length:num},()=>[]);
-
-  arr.forEach((item,i)=>cols[i%num].push(item));
-
-  return cols;
-}
-
-function renderPage(items){
-
-  renderTopStory(items);
-
-  const sections = categories.filter(x=>x!=="Top");
-
-  const columns = chunkIntoColumns(sections,3);
-
-  const content = document.getElementById("content");
-
-  content.innerHTML = "";
-
-  columns.forEach(group=>{
-
-    const col = document.createElement("div");
-
-    col.className = "column";
-
-    col.innerHTML = group.map(cat=>buildSectionHTML(cat,items)).join("");
-
-    content.appendChild(col);
-
+  const grouped = {};
+  data.forEach(item => {
+    const section = normalizeSection(item.section);
+    if(!section) return;
+    if(!grouped[section]) grouped[section] = [];
+    grouped[section].push(item);
   });
 
+  Object.keys(grouped).forEach(section => {
+    grouped[section] = sortStories(grouped[section]);
+  });
+
+  const topStories = grouped['Top'] || [];
+
+  const orderedSections = [
+    ...categoryOrder.filter(name => grouped[name]),
+    ...Object.keys(grouped).filter(name => name !== 'Top' && !categoryOrder.includes(name))
+  ];
+
+  const topHTML = `
+    <div class="top-wrap">
+      <div class="top-left"></div>
+      <div class="top-center">
+        ${topStories.length ? storyHTML(topStories[0], true) : ''}
+      </div>
+      <div class="top-right"></div>
+    </div>
+  `;
+
+  const sectionsHTML = orderedSections.map(sectionName => {
+    const stories = grouped[sectionName] || [];
+    return `
+      <section class="section">
+        <h2 class="section-title">${escapeHTML(sectionName)}</h2>
+        ${stories.map(story => storyHTML(story, false)).join('')}
+      </section>
+    `;
+  }).join('');
+
+  app.innerHTML = `
+    ${topHTML}
+    <div class="sections">
+      ${sectionsHTML}
+    </div>
+  `;
 }
 
 async function loadSheet(){
+  const app = document.getElementById('app');
 
-  const response = await fetch(SHEET_CSV_URL);
-
-  const csv = await response.text();
-
-  const items = csvToObjects(csv);
-
-  renderPage(items);
-
+  try{
+    const response = await fetch(SHEET_CSV_URL, { cache: 'no-store' });
+    if(!response.ok) throw new Error('Could not load sheet.');
+    const csvText = await response.text();
+    const data = parseCSV(csvText);
+    buildPage(data);
+  } catch(error){
+    app.innerHTML = '<div class="error">Could not load stories. Check your published Google Sheet CSV link.</div>';
+    console.error(error);
+  }
 }
 
 loadSheet();
-
 </script>
 
 </body>
