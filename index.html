@@ -73,7 +73,7 @@ header{
 .top-story{
   width:100%;
   text-align:center;
-  margin:8px 0 36px 0;
+  margin:12px 0 44px 0;
   min-height:28px;
 }
 
@@ -83,11 +83,14 @@ header{
 
 .top-story a,
 .top-story span{
-  font-size:28px;
-  font-weight:800;
+  font-size:38px;
+  font-weight:900;
   color:#000;
-  line-height:1.2;
+  line-height:1.08;
+  letter-spacing:-0.4px;
   overflow-wrap:break-word;
+  display:inline-block;
+  max-width:1100px;
 }
 
 .top-story a:hover{
@@ -99,7 +102,7 @@ header{
   max-width:calc((100% / 3) * 1.3);
   height:auto;
   display:block;
-  margin:0 auto 10px auto;
+  margin:0 auto 14px auto;
   border-radius:4px;
 }
 
@@ -123,16 +126,16 @@ header{
 }
 
 .section{
-  margin-bottom:22px;
+  margin-bottom:20px;
 }
 
 /* CATEGORY HEADINGS */
 
 .section-title{
-  font-size:19px;
+  font-size:18px;
   font-weight:900;
   text-transform:uppercase;
-  margin-bottom:10px;
+  margin-bottom:8px;
   padding-bottom:4px;
   color:#1f4e2c;
   border-bottom:2px solid #3b7a3b;
@@ -152,9 +155,9 @@ header{
 /* LINKS */
 
 .section li{
-  margin:0 0 14px 0;
-  line-height:1.4;
-  font-size:15px;
+  margin:0 0 10px 0;
+  line-height:1.28;
+  font-size:14px;
   font-weight:700;
   overflow-wrap:break-word;
 }
@@ -210,6 +213,12 @@ header{
     max-width:65%;
   }
 
+  .top-story a,
+  .top-story span{
+    font-size:32px;
+    max-width:900px;
+  }
+
 }
 
 @media (max-width:700px){
@@ -229,11 +238,22 @@ header{
 
   .top-story a,
   .top-story span{
-    font-size:22px;
+    font-size:26px;
+    line-height:1.12;
+    max-width:100%;
   }
 
   .top-story .story-image{
     max-width:100%;
+  }
+
+  .section-title{
+    font-size:17px;
+  }
+
+  .section li{
+    font-size:14px;
+    line-height:1.3;
   }
 
 }
