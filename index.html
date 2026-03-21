@@ -106,6 +106,25 @@ header{
   border-radius:4px;
 }
 
+.top-story .top-links{
+  list-style:none;
+  padding:0;
+  margin:18px auto 0 auto;
+  max-width:1100px;
+}
+
+.top-story .top-links li{
+  margin:10px 0 0 0;
+  line-height:1.25;
+}
+
+.top-story .top-links a{
+  font-size:22px;
+  font-weight:800;
+  max-width:1100px;
+  display:inline-block;
+}
+
 /* GRID */
 
 .grid{
@@ -219,6 +238,15 @@ header{
     max-width:900px;
   }
 
+  .top-story .top-links{
+    max-width:900px;
+  }
+
+  .top-story .top-links a{
+    font-size:20px;
+    max-width:900px;
+  }
+
 }
 
 @media (max-width:700px){
@@ -244,6 +272,15 @@ header{
   }
 
   .top-story .story-image{
+    max-width:100%;
+  }
+
+  .top-story .top-links{
+    max-width:100%;
+  }
+
+  .top-story .top-links a{
+    font-size:18px;
     max-width:100%;
   }
 
@@ -381,12 +418,13 @@ function sortByRank(items){
 
 function renderTopStory(items){
 
-  const top = items
+  const topItems = items
     .filter(x=>x.section==="Top")
-    .sort((a,b)=>Number(a.rank)-Number(b.rank))[0];
+    .sort((a,b)=>Number(a.rank)-Number(b.rank));
 
-  if(!top) return;
+  if(!topItems.length) return;
 
+  const top = topItems[0];
   const el = document.getElementById("top-story");
 
   let html = "";
@@ -396,6 +434,17 @@ function renderTopStory(items){
   }
 
   html += `<a href="${top.url}" target="_blank" rel="noopener noreferrer">${top.headline}</a>`;
+
+  if(topItems.length > 1){
+    html += `<ul class="top-links">`;
+
+    for(let i = 1; i < topItems.length; i++){
+      const item = topItems[i];
+      html += `<li><a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.headline}</a></li>`;
+    }
+
+    html += `</ul>`;
+  }
 
   el.innerHTML = html;
 }
