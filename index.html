@@ -1,10 +1,66 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>AcreWire</title>
+
+<!-- ============================================================
+     1. SEO META TAGS  (improvement #1)
+     ============================================================ -->
+<title>AcreWire — Farmland, Agriculture, Energy & Real Asset News</title>
+<meta name="description" content="AcreWire is a daily news aggregator covering farmland, agriculture, commodities, energy, real estate, and real-asset investing. One page. Every headline that matters."/>
+<meta name="keywords" content="farmland news, agriculture news, ag policy, row crops, commodities, real estate news, energy news, real asset investing, AcreWire"/>
+<meta name="author" content="AcreWire"/>
+<meta name="robots" content="index,follow,max-image-preview:large"/>
+<link rel="canonical" href="https://www.acrewire.com/"/>
+
+<!-- Open Graph (Facebook, LinkedIn, iMessage, Slack, etc.) -->
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="AcreWire"/>
+<meta property="og:title" content="AcreWire — Farmland, Agriculture, Energy & Real Asset News"/>
+<meta property="og:description" content="One page. Every headline that matters across farmland, ag, commodities, energy, and real estate."/>
+<meta property="og:url" content="https://www.acrewire.com/"/>
+<!-- To enable share-preview images, upload an og-image.png (1200x630) to your repo root, then this works automatically: -->
+<meta property="og:image" content="https://www.acrewire.com/og-image.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="AcreWire — Farmland, Agriculture, Energy & Real Asset News"/>
+<meta name="twitter:description" content="One page. Every headline that matters across farmland, ag, commodities, energy, and real estate."/>
+<meta name="twitter:image" content="https://www.acrewire.com/og-image.png"/>
+
+<meta name="theme-color" content="#1f4e2c"/>
+
+<!-- ============================================================
+     5. PERFORMANCE: connect to third-party origins early
+     ============================================================ -->
+<link rel="preconnect" href="https://docs.google.com" crossorigin/>
+<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin/>
+<link rel="dns-prefetch" href="https://docs.google.com"/>
+
+<!-- ============================================================
+     3. STRUCTURED DATA — Schema.org JSON-LD for Google News
+     ============================================================ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsMediaOrganization",
+  "name": "AcreWire",
+  "url": "https://www.acrewire.com/",
+  "description": "Daily news aggregator covering farmland, agriculture, commodities, energy, and real estate.",
+  "email": "acrewire1@gmail.com"
+}
+</script>
+
 <style>
+:root{
+  --green-dark:#1f4e2c;
+  --green-mid:#3b7a3b;
+  --green-light:#e8f1ea;
+  --line:#ccc;
+}
 body{
   font-family: Arial, Helvetica, sans-serif;
   max-width:1800px;
@@ -13,6 +69,14 @@ body{
   background:#fff;
   color:#000;
 }
+/* Skip link for keyboard / screen-reader users (improvement #8) */
+.skip-link{
+  position:absolute; left:-9999px; top:0;
+  background:var(--green-dark); color:#fff;
+  padding:8px 12px; z-index:1000; font-weight:700;
+}
+.skip-link:focus{left:10px;}
+
 /* HEADER */
 header{
   display:flex;
@@ -33,10 +97,11 @@ header{
   font-weight:900;
   letter-spacing:4px;
   text-transform:uppercase;
-  margin-bottom:6px;
-  background:linear-gradient(90deg,#1f4e2c,#3b7a3b);
+  margin:0 0 6px 0;
+  background:linear-gradient(90deg,var(--green-dark),var(--green-mid));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
+  background-clip:text;
 }
 /* SUBTITLE */
 .tagline{
@@ -53,7 +118,7 @@ header{
   display:inline-block;
   width:35px;
   height:2px;
-  background:#3b7a3b;
+  background:var(--green-mid);
   margin:0 10px;
   vertical-align:middle;
 }
@@ -67,8 +132,8 @@ header{
 .top-story a{
   text-decoration:underline;
 }
-.top-story a,
-.top-story span{
+.top-story > a,
+.top-story > span{
   font-size:38px;
   font-weight:900;
   color:#000;
@@ -105,6 +170,36 @@ header{
   max-width:1100px;
   display:inline-block;
 }
+
+/* SHARE BAR (improvement #6) */
+.share-bar{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin:14px 0 0 0;
+  flex-wrap:wrap;
+}
+.share-bar button, .share-bar a{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 12px;
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:700;
+  color:var(--green-dark);
+  cursor:pointer;
+  text-decoration:none;
+  font-family:inherit;
+  transition:background .15s ease, border-color .15s ease;
+}
+.share-bar button:hover, .share-bar a:hover{
+  background:var(--green-light);
+  border-color:var(--green-mid);
+}
+
 /* GRID */
 .grid{
   display:grid;
@@ -113,7 +208,7 @@ header{
   width:100%;
 }
 .column{
-  border-right:1px solid #ccc;
+  border-right:1px solid var(--line);
   padding:0 18px;
   box-sizing:border-box;
 }
@@ -128,14 +223,11 @@ header{
   font-size:18px;
   font-weight:900;
   text-transform:uppercase;
-  margin-bottom:8px;
+  margin:0 0 8px 0;
   padding-bottom:4px;
-  color:#1f4e2c;
-  border-bottom:2px solid #3b7a3b;
+  color:var(--green-dark);
+  border-bottom:2px solid var(--green-mid);
   letter-spacing:1px;
-}
-.section-title:hover{
-  color:#2e6a38;
 }
 .section ul{
   list-style:none;
@@ -167,16 +259,38 @@ header{
   border-radius:4px;
   object-fit:cover;
 }
-/* LOADING */
+/* LOADING + ERROR  (improvement #9) */
 .loading{
   font-size:16px;
   color:#666;
+  text-align:center;
+  padding:30px;
 }
 .error{
   color:#b00020;
   font-weight:700;
   text-align:center;
-  margin-top:20px;
+  margin:30px auto;
+  padding:16px;
+  max-width:600px;
+  border:1px solid #b00020;
+  border-radius:4px;
+  background:#fff5f5;
+  grid-column:1 / -1;
+}
+.error button{
+  margin-left:10px;
+  padding:6px 14px;
+  border:none;
+  background:#b00020;
+  color:#fff;
+  border-radius:4px;
+  font-weight:700;
+  cursor:pointer;
+  font-family:inherit;
+}
+.error button:hover{
+  background:#8a0017;
 }
 /* FOOTER */
 .footer{
@@ -187,7 +301,7 @@ header{
   color:#555;
 }
 .footer a{
-  color:#1f4e2c;
+  color:var(--green-dark);
   font-weight:700;
   text-decoration:none;
 }
@@ -197,10 +311,6 @@ header{
 
 /* ============================================================
    MOBILE RESPONSIVE
-   - Tablet (≤1024px): 3 columns → 2 columns, third column wraps
-     onto a new row spanning full width.
-   - Phone  (≤640px):  → 1 column, fonts shrink, paddings tighten,
-     hero image fills the width.
    ============================================================ */
 @media (max-width: 1024px){
   body{padding:0 16px;}
@@ -209,12 +319,12 @@ header{
   .column:nth-child(3){
     grid-column:1 / -1;
     border-right:none;
-    border-top:1px solid #ccc;
+    border-top:1px solid var(--line);
     padding-top:18px;
     margin-top:10px;
   }
   .brand{font-size:44px;letter-spacing:3px;}
-  .top-story a, .top-story span{font-size:30px;}
+  .top-story > a, .top-story > span{font-size:30px;}
   .top-story .story-image{max-width:80%;}
   .top-story .top-links a{font-size:19px;}
 }
@@ -223,7 +333,7 @@ header{
   .grid{grid-template-columns:1fr;}
   .column{
     border-right:none;
-    border-bottom:1px solid #ccc;
+    border-bottom:1px solid var(--line);
     padding:14px 0;
   }
   .column:nth-child(2),
@@ -238,13 +348,15 @@ header{
   .tagline{font-size:12px;letter-spacing:1px;}
   .tagline::before,.tagline::after{width:20px;margin:0 6px;}
   .top-story{margin:10px 0 28px 0;}
-  .top-story a, .top-story span{font-size:24px;line-height:1.15;}
+  .top-story > a, .top-story > span{font-size:24px;line-height:1.15;}
   .top-story .story-image{max-width:100%;}
   .top-story .top-links a{font-size:17px;}
   .section-title{font-size:16px;}
   .section li{font-size:15px;}
+  .share-bar button, .share-bar a{font-size:12px;padding:5px 10px;}
 }
 </style>
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TDET4QLJHM"></script>
 <script>
@@ -255,24 +367,32 @@ header{
 </script>
 </head>
 <body>
+
+<!-- improvement #8: skip link for keyboard users -->
+<a href="#content" class="skip-link">Skip to content</a>
+
 <header>
   <div class="masthead">
-    <div class="brand">ACREWIRE</div>
-    <div class="tagline">
-      Land Agriculture Energy Markets
-    </div>
+    <h1 class="brand">ACREWIRE</h1>
+    <div class="tagline">Land Agriculture Energy Markets</div>
   </div>
 </header>
-<div id="top-story" class="top-story"></div>
-<div id="content" class="grid">
-  <div class="loading">Loading...</div>
-</div>
-<div class="footer">
-  Media & Advertising Inquiries:
+
+<main>
+  <article id="top-story" class="top-story" aria-label="Top story"></article>
+  <section id="content" class="grid" aria-label="Headlines by category">
+    <div class="loading">Loading the latest headlines…</div>
+  </section>
+</main>
+
+<footer class="footer">
+  Media &amp; Advertising Inquiries:
   <a href="mailto:acrewire1@gmail.com">acrewire1@gmail.com</a>
-</div>
+</footer>
+
 <script>
 const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR-3xml3CAOrMcVTmr4tkQ5R1gjsnxd2fuRh2u8I0ucXHLdcjMHzs43Jxmu-mcGXGv6qTMA6mar_7Qm/pub?output=csv";
+
 const categories = [
   "Top",
   "Row Crops",
@@ -293,132 +413,184 @@ const categories = [
   "Infrastructure",
   "Real Asset Investing"
 ];
+
+/* ===== CSV PARSE ===== */
 function parseCSV(text){
   const rows = [];
-  let row = [];
-  let cell = "";
-  let inQuotes = false;
+  let row = [], cell = "", inQuotes = false;
   for(let i = 0; i < text.length; i++){
-    const char = text[i];
-    const next = text[i + 1];
-    if(char === '"'){
-      if(inQuotes && next === '"'){
-        cell += '"';
-        i++;
-      } else {
-        inQuotes = !inQuotes;
-      }
-    } else if(char === "," && !inQuotes){
-      row.push(cell);
-      cell = "";
-    } else if((char === "\n" || char === "\r") && !inQuotes){
-      if(char === "\r" && next === "\n") i++;
-      row.push(cell);
-      rows.push(row);
-      row = [];
-      cell = "";
-    } else {
-      cell += char;
-    }
+    const c = text[i], n = text[i + 1];
+    if(c === '"'){
+      if(inQuotes && n === '"'){ cell += '"'; i++; }
+      else inQuotes = !inQuotes;
+    } else if(c === "," && !inQuotes){
+      row.push(cell); cell = "";
+    } else if((c === "\n" || c === "\r") && !inQuotes){
+      if(c === "\r" && n === "\n") i++;
+      row.push(cell); rows.push(row); row = []; cell = "";
+    } else cell += c;
   }
-  if(cell.length > 0 || row.length > 0){
-    row.push(cell);
-    rows.push(row);
-  }
+  if(cell.length > 0 || row.length > 0){ row.push(cell); rows.push(row); }
   return rows;
 }
 function cleanText(value){
   return String(value || "")
-    .replace(/^\uFEFF/, "")
-    .replace(/\u00A0/g, " ")
+    .replace(/^\uFEFF/, "")     // strip BOM
+    .replace(/\u00A0/g, " ")    // non-breaking space → regular space
     .trim();
 }
 function csvToObjects(csvText){
-  const rows = parseCSV(csvText).filter(r => r.some(cell => cleanText(cell) !== ""));
+  const rows = parseCSV(csvText).filter(r => r.some(c => cleanText(c) !== ""));
   if(!rows.length) return [];
   const items = [];
   for(let i = 1; i < rows.length; i++){
     const row = rows[i];
     if(!row || row.length < 4) continue;
     items.push({
-      section: row[0] ? cleanText(row[0]) : "",
-      rank: row[1] ? cleanText(row[1]) : "",
-      headline: row[2] ? cleanText(row[2]) : "",
-      url: row[3] ? cleanText(row[3]) : "",
-      image: row[4] ? cleanText(row[4]) : ""
+      section:  cleanText(row[0]),
+      rank:     cleanText(row[1]),
+      headline: cleanText(row[2]),
+      url:      cleanText(row[3]),
+      image:    cleanText(row[4])
     });
   }
   return items;
 }
-function sortByRank(items){
-  return [...items].sort((a,b)=>Number(a.rank)-Number(b.rank));
+
+/* ===== HTML escaping (improvement #8 — security + correctness) =====
+   Headlines from your sheet might contain & < > " ' and would otherwise
+   break the layout or, worse, allow injected HTML. */
+function escapeHTML(s){
+  return String(s).replace(/[&<>"']/g, m => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  })[m]);
 }
+
+function sortByRank(items){
+  return [...items].sort((a,b) => Number(a.rank) - Number(b.rank));
+}
+
+/* ===== RENDER ===== */
 function renderTopStory(items){
-  const topItems = items
-    .filter(x=>x.section==="Top")
-    .sort((a,b)=>Number(a.rank)-Number(b.rank));
-  if(!topItems.length) return;
-  const top = topItems[0];
-  const el = document.getElementById("top-story");
+  const tops = items
+    .filter(x => x.section === "Top")
+    .sort((a,b) => Number(a.rank) - Number(b.rank));
+  if(!tops.length) return;
+  const top = tops[0];
+  const el  = document.getElementById("top-story");
+  const headlineSafe = escapeHTML(top.headline);
+  const urlSafe      = escapeHTML(top.url);
+
   let html = "";
   if(top.image){
-    html += `<img src="${top.image}" alt="${top.headline}" class="story-image">`;
+    // improvement #5: hero image gets fetchpriority="high" so the
+    // browser starts loading it first.
+    html += `<img src="${escapeHTML(top.image)}" alt="${headlineSafe}"
+                  class="story-image" fetchpriority="high" decoding="async">`;
   }
-  html += `<a href="${top.url}" target="_blank" rel="noopener noreferrer">${top.headline}</a>`;
-  if(topItems.length > 1){
+  html += `<a href="${urlSafe}" target="_blank" rel="noopener noreferrer">${headlineSafe}</a>`;
+
+  // improvement #6: share bar
+  const shareUrl = encodeURIComponent(top.url);
+  const shareTxt = encodeURIComponent(top.headline);
+  html += `
+    <div class="share-bar" aria-label="Share this story">
+      <a href="https://twitter.com/intent/tweet?text=${shareTxt}&url=${shareUrl}&via=acrewire"
+         target="_blank" rel="noopener" aria-label="Share on X">𝕏 Post</a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}"
+         target="_blank" rel="noopener" aria-label="Share on Facebook">f Share</a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}"
+         target="_blank" rel="noopener" aria-label="Share on LinkedIn">in Share</a>
+      <button type="button" data-share-url="${urlSafe}" aria-label="Copy link">⧉ Copy link</button>
+    </div>`;
+
+  if(tops.length > 1){
     html += `<ul class="top-links">`;
-    for(let i = 1; i < topItems.length; i++){
-      const item = topItems[i];
-      html += `<li><a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.headline}</a></li>`;
+    for(let i = 1; i < tops.length; i++){
+      const it = tops[i];
+      html += `<li><a href="${escapeHTML(it.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(it.headline)}</a></li>`;
     }
     html += `</ul>`;
   }
   el.innerHTML = html;
+
+  // Attach copy-link handler
+  const copyBtn = el.querySelector("button[data-share-url]");
+  if(copyBtn){
+    copyBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(copyBtn.dataset.shareUrl).then(() => {
+        const orig = copyBtn.textContent;
+        copyBtn.textContent = "✓ Copied";
+        setTimeout(() => copyBtn.textContent = orig, 1500);
+      });
+    });
+  }
 }
-function buildSectionHTML(title,items){
-  const sectionItems = sortByRank(items.filter(x=>x.section===title));
-  let html = `
-  <div class="section">
-  <div class="section-title">${title}</div>
-  <ul>
-  `;
-  for(let item of sectionItems){
+
+function buildSectionHTML(title, items){
+  const sectionItems = sortByRank(items.filter(x => x.section === title));
+  // improvement #8: <h2> instead of <div> for category titles
+  let html = `<div class="section"><h2 class="section-title">${escapeHTML(title)}</h2><ul>`;
+  for(const item of sectionItems){
     html += `<li>`;
     if(item.image){
-      html += `<img src="${item.image}" alt="${item.headline}" class="story-image">`;
+      // improvement #5: lazy-load grid images (most are below the fold)
+      html += `<img src="${escapeHTML(item.image)}" alt="${escapeHTML(item.headline)}"
+                    class="story-image" loading="lazy" decoding="async">`;
     }
-    html += `<a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.headline}</a></li>`;
+    html += `<a href="${escapeHTML(item.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(item.headline)}</a></li>`;
   }
-  html += `
-  </ul>
-  </div>
-  `;
+  html += `</ul></div>`;
   return html;
 }
-function chunkIntoColumns(arr,num){
-  const cols = Array.from({length:num},()=>[]);
-  arr.forEach((item,i)=>cols[i%num].push(item));
+
+function chunkIntoColumns(arr, num){
+  const cols = Array.from({length: num}, () => []);
+  arr.forEach((item, i) => cols[i % num].push(item));
   return cols;
 }
+
 function renderPage(items){
   renderTopStory(items);
-  const sections = categories.filter(x=>x!=="Top");
-  const columns = chunkIntoColumns(sections,3);
-  const content = document.getElementById("content");
+  const sections = categories.filter(x => x !== "Top");
+  const columns  = chunkIntoColumns(sections, 3);
+  const content  = document.getElementById("content");
   content.innerHTML = "";
-  columns.forEach(group=>{
+  columns.forEach(group => {
     const col = document.createElement("div");
     col.className = "column";
-    col.innerHTML = group.map(cat=>buildSectionHTML(cat,items)).join("");
+    col.innerHTML = group.map(cat => buildSectionHTML(cat, items)).join("");
     content.appendChild(col);
   });
 }
-async function loadSheet(){
-  const response = await fetch(SHEET_CSV_URL);
-  const csv = await response.text();
-  const items = csvToObjects(csv);
-  renderPage(items);
+
+/* ===== Error state with retry (improvement #9) ===== */
+function showError(message){
+  const content = document.getElementById("content");
+  content.innerHTML = `<div class="error">
+    ${escapeHTML(message)}
+    <button type="button" id="retryBtn">Retry</button>
+  </div>`;
+  document.getElementById("retryBtn").addEventListener("click", loadSheet);
 }
+
+/* ===== Data load with try/catch ===== */
+async function loadSheet(){
+  const content = document.getElementById("content");
+  content.innerHTML = `<div class="loading">Loading the latest headlines…</div>`;
+  try{
+    const response = await fetch(SHEET_CSV_URL, {cache: "no-store"});
+    if(!response.ok) throw new Error("HTTP " + response.status);
+    const csv = await response.text();
+    const items = csvToObjects(csv);
+    if(!items.length) throw new Error("No items in feed.");
+    renderPage(items);
+  } catch(err){
+    console.error(err);
+    showError("Couldn't load the latest headlines. Please try again.");
+  }
+}
+
 loadSheet();
 </script>
 </body>
