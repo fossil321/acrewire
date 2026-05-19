@@ -126,6 +126,15 @@ header{
   margin:0 10px;
   vertical-align:middle;
 }
+/* Static intro paragraph — helps SEO & first-time visitors (Soft 404 fix) */
+.intro{
+  max-width:780px;
+  margin:0 auto 14px auto;
+  font-size:14px;
+  line-height:1.4;
+  color:#555;
+  font-weight:600;
+}
 /* TOP STORY */
 .top-story{
   width:100%;
@@ -380,14 +389,44 @@ header{
   <div class="masthead">
     <h1 class="brand">ACREWIRE</h1>
     <div class="tagline">Land Agriculture Energy Markets</div>
+    <p class="intro">A daily news aggregator covering farmland, agriculture, commodities, energy, real estate, and real-asset investing — every headline that matters, on one page.</p>
   </div>
 </header>
 
 <main>
   <article id="top-story" class="top-story" aria-label="Top story"></article>
   <section id="content" class="grid" aria-label="Headlines by category">
-    <div class="loading">Loading the latest headlines…</div>
+    <!-- Pre-rendered category structure (fixes Google Soft 404) -->
+    <div class="column">
+      <div class="section"><h2 class="section-title">Row Crops</h2><ul data-section="Row Crops"></ul></div>
+      <div class="section"><h2 class="section-title">Ag Policy</h2><ul data-section="Ag Policy"></ul></div>
+      <div class="section"><h2 class="section-title">Farmland</h2><ul data-section="Farmland"></ul></div>
+      <div class="section"><h2 class="section-title">Markets</h2><ul data-section="Markets"></ul></div>
+      <div class="section"><h2 class="section-title">Land &amp; Development</h2><ul data-section="Land &amp; Development"></ul></div>
+      <div class="section"><h2 class="section-title">Infrastructure</h2><ul data-section="Infrastructure"></ul></div>
+    </div>
+    <div class="column">
+      <div class="section"><h2 class="section-title">Permanent Crops</h2><ul data-section="Permanent Crops"></ul></div>
+      <div class="section"><h2 class="section-title">Ag Technology</h2><ul data-section="Ag Technology"></ul></div>
+      <div class="section"><h2 class="section-title">Water</h2><ul data-section="Water"></ul></div>
+      <div class="section"><h2 class="section-title">Residential Real Estate</h2><ul data-section="Residential Real Estate"></ul></div>
+      <div class="section"><h2 class="section-title">Energy</h2><ul data-section="Energy"></ul></div>
+      <div class="section"><h2 class="section-title">Real Asset Investing</h2><ul data-section="Real Asset Investing"></ul></div>
+    </div>
+    <div class="column">
+      <div class="section"><h2 class="section-title">Global Agriculture</h2><ul data-section="Global Agriculture"></ul></div>
+      <div class="section"><h2 class="section-title">Fertilizer &amp; Chemicals</h2><ul data-section="Fertilizer &amp; Chemicals"></ul></div>
+      <div class="section"><h2 class="section-title">Commodities</h2><ul data-section="Commodities"></ul></div>
+      <div class="section"><h2 class="section-title">Commercial Real Estate</h2><ul data-section="Commercial Real Estate"></ul></div>
+      <div class="section"><h2 class="section-title">Renewable Energy</h2><ul data-section="Renewable Energy"></ul></div>
+    </div>
   </section>
+  <noscript>
+    <p style="text-align:center;color:#555;padding:20px;">
+      AcreWire is best viewed with JavaScript enabled to see the latest headlines.
+      Without it, you can still see our category list above.
+    </p>
+  </noscript>
 </main>
 
 <footer class="footer">
@@ -462,9 +501,7 @@ function csvToObjects(csvText){
   return items;
 }
 
-/* ===== HTML escaping (improvement #8 — security + correctness) =====
-   Headlines from your sheet might contain & < > " ' and would otherwise
-   break the layout or, worse, allow injected HTML. */
+/* ===== HTML escaping (security + correctness) ===== */
 function escapeHTML(s){
   return String(s).replace(/[&<>"']/g, m => ({
     '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
@@ -488,14 +525,11 @@ function renderTopStory(items){
 
   let html = "";
   if(top.image){
-    // improvement #5: hero image gets fetchpriority="high" so the
-    // browser starts loading it first.
     html += `<img src="${escapeHTML(top.image)}" alt="${headlineSafe}"
                   class="story-image" fetchpriority="high" decoding="async">`;
   }
   html += `<a href="${urlSafe}" target="_blank" rel="noopener noreferrer">${headlineSafe}</a>`;
 
-  // improvement #6: share bar
   const shareUrl = encodeURIComponent(top.url);
   const shareTxt = encodeURIComponent(top.headline);
   html += `
@@ -519,7 +553,6 @@ function renderTopStory(items){
   }
   el.innerHTML = html;
 
-  // Attach copy-link handler
   const copyBtn = el.querySelector("button[data-share-url]");
   if(copyBtn){
     copyBtn.addEventListener("click", () => {
@@ -532,57 +565,51 @@ function renderTopStory(items){
   }
 }
 
-function buildSectionHTML(title, items){
+/* Fill items into the pre-rendered category <ul> elements. Pre-rendering
+   the structure in static HTML fixes Google's Soft 404 issue — Googlebot
+   sees real content (the category headings) on first crawl without
+   waiting for JS to run. */
+function fillSection(title, items){
+  const ul = document.querySelector(`ul[data-section="${title.replace(/"/g, '&quot;')}"]`);
+  if(!ul) return;
   const sectionItems = sortByRank(items.filter(x => x.section === title));
-  // improvement #8: <h2> instead of <div> for category titles
-  let html = `<div class="section"><h2 class="section-title">${escapeHTML(title)}</h2><ul>`;
+  let html = "";
   for(const item of sectionItems){
     html += `<li>`;
     if(item.image){
-      // improvement #5: lazy-load grid images (most are below the fold)
       html += `<img src="${escapeHTML(item.image)}" alt="${escapeHTML(item.headline)}"
                     class="story-image" loading="lazy" decoding="async">`;
     }
     html += `<a href="${escapeHTML(item.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(item.headline)}</a></li>`;
   }
-  html += `</ul></div>`;
-  return html;
-}
-
-function chunkIntoColumns(arr, num){
-  const cols = Array.from({length: num}, () => []);
-  arr.forEach((item, i) => cols[i % num].push(item));
-  return cols;
+  ul.innerHTML = html;
 }
 
 function renderPage(items){
   renderTopStory(items);
-  const sections = categories.filter(x => x !== "Top");
-  const columns  = chunkIntoColumns(sections, 3);
-  const content  = document.getElementById("content");
-  content.innerHTML = "";
-  columns.forEach(group => {
-    const col = document.createElement("div");
-    col.className = "column";
-    col.innerHTML = group.map(cat => buildSectionHTML(cat, items)).join("");
-    content.appendChild(col);
+  categories.filter(x => x !== "Top").forEach(cat => fillSection(cat, items));
+}
+
+/* ===== Error state with retry =====
+   Shows error banner ABOVE the pre-rendered category grid instead
+   of wiping it out, so the structure stays visible. */
+function showError(message){
+  const old = document.getElementById("errorBanner");
+  if(old) old.remove();
+  const main = document.querySelector("main");
+  const banner = document.createElement("div");
+  banner.id = "errorBanner";
+  banner.className = "error";
+  banner.innerHTML = `${escapeHTML(message)}
+    <button type="button" id="retryBtn">Retry</button>`;
+  main.insertBefore(banner, document.getElementById("content"));
+  document.getElementById("retryBtn").addEventListener("click", () => {
+    banner.remove();
+    loadSheet();
   });
 }
 
-/* ===== Error state with retry (improvement #9) ===== */
-function showError(message){
-  const content = document.getElementById("content");
-  content.innerHTML = `<div class="error">
-    ${escapeHTML(message)}
-    <button type="button" id="retryBtn">Retry</button>
-  </div>`;
-  document.getElementById("retryBtn").addEventListener("click", loadSheet);
-}
-
-/* ===== Data load with try/catch ===== */
 async function loadSheet(){
-  const content = document.getElementById("content");
-  content.innerHTML = `<div class="loading">Loading the latest headlines…</div>`;
   try{
     const response = await fetch(SHEET_CSV_URL, {cache: "no-store"});
     if(!response.ok) throw new Error("HTTP " + response.status);
