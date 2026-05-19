@@ -32,7 +32,7 @@
 
 <meta name="theme-color" content="#1f4e2c"/>
 
-<!-- Favicons / app icons (improvement #10) -->
+<!-- Favicons / app icons -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
 <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
@@ -73,7 +73,7 @@ body{
   background:#fff;
   color:#000;
 }
-/* Skip link for keyboard / screen-reader users (improvement #8) */
+/* Skip link for keyboard / screen-reader users */
 .skip-link{
   position:absolute; left:-9999px; top:0;
   background:var(--green-dark); color:#fff;
@@ -107,7 +107,7 @@ header{
   -webkit-text-fill-color:transparent;
   background-clip:text;
 }
-/* SUBTITLE */
+/* TAGLINE */
 .tagline{
   font-size:15px;
   letter-spacing:2px;
@@ -126,14 +126,15 @@ header{
   margin:0 10px;
   vertical-align:middle;
 }
-/* Static intro paragraph — helps SEO & first-time visitors (Soft 404 fix) */
+/* Slogan — confident, on-brand */
 .intro{
   max-width:780px;
-  margin:0 auto 14px auto;
-  font-size:14px;
+  margin:0 auto 18px auto;
+  font-size:17px;
   line-height:1.4;
-  color:#555;
-  font-weight:600;
+  color:var(--green-dark);
+  font-weight:700;
+  letter-spacing:0.5px;
 }
 /* TOP STORY */
 .top-story{
@@ -185,7 +186,7 @@ header{
   color:#000;
 }
 
-/* SHARE BAR (improvement #6) */
+/* SHARE BAR */
 .share-bar{
   display:flex;
   justify-content:center;
@@ -273,7 +274,7 @@ header{
   border-radius:4px;
   object-fit:cover;
 }
-/* LOADING + ERROR  (improvement #9) */
+/* LOADING + ERROR */
 .loading{
   font-size:16px;
   color:#666;
@@ -368,6 +369,7 @@ header{
   .section-title{font-size:16px;}
   .section li{font-size:15px;}
   .share-bar button, .share-bar a{font-size:12px;padding:5px 10px;}
+  .intro{font-size:15px;}
 }
 </style>
 
@@ -382,14 +384,13 @@ header{
 </head>
 <body>
 
-<!-- improvement #8: skip link for keyboard users -->
 <a href="#content" class="skip-link">Skip to content</a>
 
 <header>
   <div class="masthead">
     <h1 class="brand">ACREWIRE</h1>
-    <div class="tagline">Land Agriculture Energy Markets</div>
-    <p class="intro">A daily news aggregator covering farmland, agriculture, commodities, energy, real estate, and real-asset investing — every headline that matters, on one page.</p>
+    <div class="tagline">Farmland · Agriculture · Energy · Real Estate</div>
+    <p class="intro">The real-assets wire.</p>
   </div>
 </header>
 
@@ -501,7 +502,7 @@ function csvToObjects(csvText){
   return items;
 }
 
-/* ===== HTML escaping (security + correctness) ===== */
+/* ===== HTML escaping ===== */
 function escapeHTML(s){
   return String(s).replace(/[&<>"']/g, m => ({
     '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
@@ -565,10 +566,7 @@ function renderTopStory(items){
   }
 }
 
-/* Fill items into the pre-rendered category <ul> elements. Pre-rendering
-   the structure in static HTML fixes Google's Soft 404 issue — Googlebot
-   sees real content (the category headings) on first crawl without
-   waiting for JS to run. */
+/* Fill items into the pre-rendered category <ul> elements. */
 function fillSection(title, items){
   const ul = document.querySelector(`ul[data-section="${title.replace(/"/g, '&quot;')}"]`);
   if(!ul) return;
@@ -590,9 +588,7 @@ function renderPage(items){
   categories.filter(x => x !== "Top").forEach(cat => fillSection(cat, items));
 }
 
-/* ===== Error state with retry =====
-   Shows error banner ABOVE the pre-rendered category grid instead
-   of wiping it out, so the structure stays visible. */
+/* ===== Error state with retry ===== */
 function showError(message){
   const old = document.getElementById("errorBanner");
   if(old) old.remove();
@@ -620,8 +616,7 @@ async function loadSheet(){
   } catch(err){
     console.error(err);
     showError("Couldn't load the latest headlines. Please try again.");
-  }
-}
+  }}
 
 loadSheet();
 </script>
