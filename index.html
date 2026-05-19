@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 
 <!-- ============================================================
-     1. SEO META TAGS  (improvement #1)
+     1. SEO META TAGS
      ============================================================ -->
 <title>AcreWire — Farmland, Agriculture, Energy & Real Asset News</title>
 <meta name="description" content="AcreWire is a daily news aggregator covering farmland, agriculture, commodities, energy, real estate, and real-asset investing. One page. Every headline that matters."/>
@@ -14,7 +14,7 @@
 <meta name="robots" content="index,follow,max-image-preview:large"/>
 <link rel="canonical" href="https://www.acrewire.com/"/>
 
-<!-- Open Graph (Facebook, LinkedIn, iMessage, Slack, etc.) -->
+<!-- Open Graph -->
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="AcreWire"/>
 <meta property="og:title" content="AcreWire — Farmland, Agriculture, Energy & Real Asset News"/>
@@ -38,14 +38,17 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
 
 <!-- ============================================================
-     5. PERFORMANCE: connect to third-party origins early
+     PERFORMANCE
      ============================================================ -->
 <link rel="preconnect" href="https://docs.google.com" crossorigin/>
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin/>
 <link rel="dns-prefetch" href="https://docs.google.com"/>
+<!-- Start fetching the headlines CSV BEFORE the JS even parses (faster first paint of articles) -->
+<link rel="preload" as="fetch" crossorigin
+      href="https://docs.google.com/spreadsheets/d/e/2PACX-1vR-3xml3CAOrMcVTmr4tkQ5R1gjsnxd2fuRh2u8I0ucXHLdcjMHzs43Jxmu-mcGXGv6qTMA6mar_7Qm/pub?output=csv"/>
 
 <!-- ============================================================
-     3. STRUCTURED DATA — Schema.org JSON-LD for Google News
+     STRUCTURED DATA — Schema.org JSON-LD for Google News
      ============================================================ -->
 <script type="application/ld+json">
 {
@@ -73,7 +76,6 @@ body{
   background:#fff;
   color:#000;
 }
-/* Skip link for keyboard / screen-reader users */
 .skip-link{
   position:absolute; left:-9999px; top:0;
   background:var(--green-dark); color:#fff;
@@ -81,7 +83,6 @@ body{
 }
 .skip-link:focus{left:10px;}
 
-/* HEADER */
 header{
   display:flex;
   flex-direction:column;
@@ -95,7 +96,6 @@ header{
   flex-direction:column;
   align-items:center;
 }
-/* ACREWIRE TITLE */
 .brand{
   font-size:56px;
   font-weight:900;
@@ -107,7 +107,6 @@ header{
   -webkit-text-fill-color:transparent;
   background-clip:text;
 }
-/* TAGLINE */
 .tagline{
   font-size:15px;
   letter-spacing:2px;
@@ -126,7 +125,6 @@ header{
   margin:0 10px;
   vertical-align:middle;
 }
-/* Slogan — confident, on-brand */
 .intro{
   max-width:780px;
   margin:0 auto 18px auto;
@@ -136,16 +134,13 @@ header{
   font-weight:700;
   letter-spacing:0.5px;
 }
-/* TOP STORY */
 .top-story{
   width:100%;
   text-align:center;
   margin:12px 0 44px 0;
   min-height:28px;
 }
-.top-story a{
-  text-decoration:underline;
-}
+.top-story a{ text-decoration:underline; }
 .top-story > a,
 .top-story > span{
   font-size:38px;
@@ -157,9 +152,7 @@ header{
   display:inline-block;
   max-width:1100px;
 }
-.top-story a:hover{
-  text-decoration:underline;
-}
+.top-story a:hover{ text-decoration:underline; }
 .top-story .story-image{
   width:100%;
   max-width:calc((100% / 3) * 1.3);
@@ -168,16 +161,8 @@ header{
   margin:0 auto 14px auto;
   border-radius:4px;
 }
-.top-story .top-links{
-  list-style:none;
-  padding:0;
-  margin:18px auto 0 auto;
-  max-width:1100px;
-}
-.top-story .top-links li{
-  margin:10px 0 0 0;
-  line-height:1.25;
-}
+.top-story .top-links{ list-style:none; padding:0; margin:18px auto 0 auto; max-width:1100px; }
+.top-story .top-links li{ margin:10px 0 0 0; line-height:1.25; }
 .top-story .top-links a{
   font-size:22px;
   font-weight:800;
@@ -186,7 +171,6 @@ header{
   color:#000;
 }
 
-/* SHARE BAR */
 .share-bar{
   display:flex;
   justify-content:center;
@@ -215,25 +199,10 @@ header{
   border-color:var(--green-mid);
 }
 
-/* GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:0;
-  width:100%;
-}
-.column{
-  border-right:1px solid var(--line);
-  padding:0 18px;
-  box-sizing:border-box;
-}
-.column:last-child{
-  border-right:none;
-}
-.section{
-  margin-bottom:20px;
-}
-/* CATEGORY HEADINGS */
+.grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:0; width:100%; }
+.column{ border-right:1px solid var(--line); padding:0 18px; box-sizing:border-box; }
+.column:last-child{ border-right:none; }
+.section{ margin-bottom:20px; }
 .section-title{
   font-size:18px;
   font-weight:900;
@@ -244,12 +213,7 @@ header{
   border-bottom:2px solid var(--green-mid);
   letter-spacing:1px;
 }
-.section ul{
-  list-style:none;
-  padding:0;
-  margin:0;
-}
-/* LINKS */
+.section ul{ list-style:none; padding:0; margin:0; }
 .section li{
   margin:0 0 10px 0;
   line-height:1.28;
@@ -257,14 +221,8 @@ header{
   font-weight:700;
   overflow-wrap:break-word;
 }
-.section a{
-  color:#000;
-  text-decoration:none;
-}
-.section a:hover{
-  text-decoration:underline;
-}
-/* STORY IMAGE */
+.section a{ color:#000; text-decoration:none; }
+.section a:hover{ text-decoration:underline; }
 .story-image{
   display:block;
   max-width:100%;
@@ -274,13 +232,7 @@ header{
   border-radius:4px;
   object-fit:cover;
 }
-/* LOADING + ERROR */
-.loading{
-  font-size:16px;
-  color:#666;
-  text-align:center;
-  padding:30px;
-}
+.loading{ font-size:16px; color:#666; text-align:center; padding:30px; }
 .error{
   color:#b00020;
   font-weight:700;
@@ -304,10 +256,7 @@ header{
   cursor:pointer;
   font-family:inherit;
 }
-.error button:hover{
-  background:#8a0017;
-}
-/* FOOTER */
+.error button:hover{ background:#8a0017; }
 .footer{
   margin-top:20px;
   padding-top:10px;
@@ -315,18 +264,9 @@ header{
   font-size:14px;
   color:#555;
 }
-.footer a{
-  color:var(--green-dark);
-  font-weight:700;
-  text-decoration:none;
-}
-.footer a:hover{
-  text-decoration:underline;
-}
+.footer a{ color:var(--green-dark); font-weight:700; text-decoration:none; }
+.footer a:hover{ text-decoration:underline; }
 
-/* ============================================================
-   MOBILE RESPONSIVE
-   ============================================================ */
 @media (max-width: 1024px){
   body{padding:0 16px;}
   .grid{grid-template-columns:repeat(2, 1fr);}
@@ -373,7 +313,6 @@ header{
 }
 </style>
 
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TDET4QLJHM"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -397,7 +336,6 @@ header{
 <main>
   <article id="top-story" class="top-story" aria-label="Top story"></article>
   <section id="content" class="grid" aria-label="Headlines by category">
-    <!-- Pre-rendered category structure (fixes Google Soft 404) -->
     <div class="column">
       <div class="section"><h2 class="section-title">Row Crops</h2><ul data-section="Row Crops"></ul></div>
       <div class="section"><h2 class="section-title">Ag Policy</h2><ul data-section="Ag Policy"></ul></div>
@@ -459,7 +397,6 @@ const categories = [
   "Real Asset Investing"
 ];
 
-/* ===== CSV PARSE ===== */
 function parseCSV(text){
   const rows = [];
   let row = [], cell = "", inQuotes = false;
@@ -480,8 +417,8 @@ function parseCSV(text){
 }
 function cleanText(value){
   return String(value || "")
-    .replace(/^\uFEFF/, "")     // strip BOM
-    .replace(/\u00A0/g, " ")    // non-breaking space → regular space
+    .replace(/^\uFEFF/, "")
+    .replace(/\u00A0/g, " ")
     .trim();
 }
 function csvToObjects(csvText){
@@ -502,7 +439,6 @@ function csvToObjects(csvText){
   return items;
 }
 
-/* ===== HTML escaping ===== */
 function escapeHTML(s){
   return String(s).replace(/[&<>"']/g, m => ({
     '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
@@ -513,7 +449,6 @@ function sortByRank(items){
   return [...items].sort((a,b) => Number(a.rank) - Number(b.rank));
 }
 
-/* ===== RENDER ===== */
 function renderTopStory(items){
   const tops = items
     .filter(x => x.section === "Top")
@@ -566,7 +501,6 @@ function renderTopStory(items){
   }
 }
 
-/* Fill items into the pre-rendered category <ul> elements. */
 function fillSection(title, items){
   const ul = document.querySelector(`ul[data-section="${title.replace(/"/g, '&quot;')}"]`);
   if(!ul) return;
@@ -588,7 +522,6 @@ function renderPage(items){
   categories.filter(x => x !== "Top").forEach(cat => fillSection(cat, items));
 }
 
-/* ===== Error state with retry ===== */
 function showError(message){
   const old = document.getElementById("errorBanner");
   if(old) old.remove();
@@ -605,18 +538,50 @@ function showError(message){
   });
 }
 
+/* ===== Stale-while-revalidate load =====
+   1. If we have a cached CSV from a previous visit, render from it
+      INSTANTLY (~0ms). User sees headlines immediately.
+   2. In parallel, fetch fresh data from Google Sheets.
+   3. When fresh data arrives, re-render quietly. New headlines
+      replace old ones in place. */
+const CACHE_KEY = "acrewire_csv_v1";
+
+function renderFromCSV(csv){
+  const items = csvToObjects(csv);
+  if(!items.length) throw new Error("No items in feed.");
+  renderPage(items);
+  return items;
+}
+
 async function loadSheet(){
+  let renderedFromCache = false;
+
+  // Step 1 — try cache first
   try{
-    const response = await fetch(SHEET_CSV_URL, {cache: "no-store"});
+    const cached = localStorage.getItem(CACHE_KEY);
+    if(cached){
+      renderFromCSV(cached);
+      renderedFromCache = true;
+    }
+  }catch(e){
+    // localStorage can fail in private mode etc. — fall through silently.
+  }
+
+  // Step 2 — fetch fresh in the background (browser may already
+  // have it warm from the <link rel=preload> in <head>).
+  try{
+    const response = await fetch(SHEET_CSV_URL);
     if(!response.ok) throw new Error("HTTP " + response.status);
     const csv = await response.text();
-    const items = csvToObjects(csv);
-    if(!items.length) throw new Error("No items in feed.");
-    renderPage(items);
-  } catch(err){
+    renderFromCSV(csv);
+    try{ localStorage.setItem(CACHE_KEY, csv); }catch(e){}
+  }catch(err){
     console.error(err);
-    showError("Couldn't load the latest headlines. Please try again.");
-  }}
+    if(!renderedFromCache){
+      showError("Couldn't load the latest headlines. Please try again.");
+    }
+  }
+}
 
 loadSheet();
 </script>
