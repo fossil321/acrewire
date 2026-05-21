@@ -4,9 +4,6 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 
-<!-- ============================================================
-     1. SEO META TAGS
-     ============================================================ -->
 <title>AcreWire — Farmland, Agriculture, Energy & Real Asset News</title>
 <meta name="description" content="AcreWire is a daily news aggregator covering farmland, agriculture, commodities, energy, real estate, and real-asset investing. One page. Every headline that matters."/>
 <meta name="keywords" content="farmland news, agriculture news, ag policy, row crops, commodities, real estate news, energy news, real asset investing, AcreWire"/>
@@ -14,7 +11,6 @@
 <meta name="robots" content="index,follow,max-image-preview:large"/>
 <link rel="canonical" href="https://www.acrewire.com/"/>
 
-<!-- Open Graph -->
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="AcreWire"/>
 <meta property="og:title" content="AcreWire — Farmland, Agriculture, Energy & Real Asset News"/>
@@ -24,7 +20,6 @@
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
 
-<!-- Twitter / X Card -->
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="AcreWire — Farmland, Agriculture, Energy & Real Asset News"/>
 <meta name="twitter:description" content="One page. Every headline that matters across farmland, ag, commodities, energy, and real estate."/>
@@ -32,24 +27,16 @@
 
 <meta name="theme-color" content="#1f4e2c"/>
 
-<!-- Favicons / app icons -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
 <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
 
-<!-- ============================================================
-     PERFORMANCE
-     ============================================================ -->
 <link rel="preconnect" href="https://docs.google.com" crossorigin/>
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin/>
 <link rel="dns-prefetch" href="https://docs.google.com"/>
-<!-- Start fetching the headlines CSV BEFORE the JS even parses (faster first paint of articles) -->
 <link rel="preload" as="fetch" crossorigin
       href="https://docs.google.com/spreadsheets/d/e/2PACX-1vR-3xml3CAOrMcVTmr4tkQ5R1gjsnxd2fuRh2u8I0ucXHLdcjMHzs43Jxmu-mcGXGv6qTMA6mar_7Qm/pub?output=csv"/>
 
-<!-- ============================================================
-     STRUCTURED DATA — Schema.org JSON-LD for Google News
-     ============================================================ -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -91,11 +78,7 @@ header{
   margin-bottom:12px;
   text-align:center;
 }
-.masthead{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
+.masthead{ display:flex; flex-direction:column; align-items:center; }
 .brand{
   font-size:56px;
   font-weight:900;
@@ -117,13 +100,10 @@ header{
 }
 .tagline::before,
 .tagline::after{
-  content:"";
-  display:inline-block;
-  width:35px;
-  height:2px;
+  content:""; display:inline-block;
+  width:35px; height:2px;
   background:var(--green-mid);
-  margin:0 10px;
-  vertical-align:middle;
+  margin:0 10px; vertical-align:middle;
 }
 .intro{
   max-width:780px;
@@ -134,12 +114,7 @@ header{
   font-weight:700;
   letter-spacing:0.5px;
 }
-.top-story{
-  width:100%;
-  text-align:center;
-  margin:12px 0 44px 0;
-  min-height:28px;
-}
+.top-story{ width:100%; text-align:center; margin:12px 0 44px 0; min-height:28px; }
 .top-story a{ text-decoration:underline; }
 .top-story > a,
 .top-story > span{
@@ -163,25 +138,14 @@ header{
 }
 .top-story .top-links{ list-style:none; padding:0; margin:18px auto 0 auto; max-width:1100px; }
 .top-story .top-links li{ margin:10px 0 0 0; line-height:1.25; }
-.top-story .top-links a{
-  font-size:22px;
-  font-weight:800;
-  max-width:1100px;
-  display:inline-block;
-  color:#000;
-}
+.top-story .top-links a{ font-size:22px; font-weight:800; max-width:1100px; display:inline-block; color:#000; }
 
 .share-bar{
-  display:flex;
-  justify-content:center;
-  gap:8px;
-  margin:14px 0 0 0;
-  flex-wrap:wrap;
+  display:flex; justify-content:center; gap:8px;
+  margin:14px 0 0 0; flex-wrap:wrap;
 }
 .share-bar button, .share-bar a{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
+  display:inline-flex; align-items:center; gap:6px;
   padding:6px 12px;
   border:1px solid var(--line);
   background:#fff;
@@ -246,23 +210,14 @@ header{
   grid-column:1 / -1;
 }
 .error button{
-  margin-left:10px;
-  padding:6px 14px;
-  border:none;
-  background:#b00020;
-  color:#fff;
-  border-radius:4px;
-  font-weight:700;
-  cursor:pointer;
-  font-family:inherit;
+  margin-left:10px; padding:6px 14px;
+  border:none; background:#b00020; color:#fff;
+  border-radius:4px; font-weight:700; cursor:pointer; font-family:inherit;
 }
 .error button:hover{ background:#8a0017; }
 .footer{
-  margin-top:20px;
-  padding-top:10px;
-  text-align:center;
-  font-size:14px;
-  color:#555;
+  margin-top:20px; padding-top:10px;
+  text-align:center; font-size:14px; color:#555;
 }
 .footer a{ color:var(--green-dark); font-weight:700; text-decoration:none; }
 .footer a:hover{ text-decoration:underline; }
@@ -339,9 +294,8 @@ header{
     <div class="column">
       <div class="section"><h2 class="section-title">Row Crops</h2><ul data-section="Row Crops"></ul></div>
       <div class="section"><h2 class="section-title">Ag Policy</h2><ul data-section="Ag Policy"></ul></div>
-      <div class="section"><h2 class="section-title">Farmland</h2><ul data-section="Farmland"></ul></div>
+      <div class="section"><h2 class="section-title">Land, Farmland, &amp; Development</h2><ul data-section="Land, Farmland, &amp; Development"></ul></div>
       <div class="section"><h2 class="section-title">Markets</h2><ul data-section="Markets"></ul></div>
-      <div class="section"><h2 class="section-title">Land &amp; Development</h2><ul data-section="Land &amp; Development"></ul></div>
       <div class="section"><h2 class="section-title">Infrastructure</h2><ul data-section="Infrastructure"></ul></div>
     </div>
     <div class="column">
@@ -384,18 +338,30 @@ const categories = [
   "Ag Policy",
   "Ag Technology",
   "Fertilizer & Chemicals",
-  "Farmland",
+  "Land, Farmland, & Development",
   "Water",
   "Commodities",
   "Markets",
   "Residential Real Estate",
   "Commercial Real Estate",
-  "Land & Development",
   "Energy",
   "Renewable Energy",
   "Infrastructure",
   "Real Asset Investing"
 ];
+
+/* Map a displayed section title to the list of source category names
+   accepted from the Google Sheet. Lets us merge categories on the site
+   without forcing you to mass-edit your sheet. Going forward you can use
+   the new name in the sheet, but old rows ("Farmland", "Land & Development")
+   keep working. */
+const SECTION_ALIASES = {
+  "Land, Farmland, & Development": [
+    "Land, Farmland, & Development",
+    "Farmland",
+    "Land & Development"
+  ]
+};
 
 function parseCSV(text){
   const rows = [];
@@ -504,7 +470,8 @@ function renderTopStory(items){
 function fillSection(title, items){
   const ul = document.querySelector(`ul[data-section="${title.replace(/"/g, '&quot;')}"]`);
   if(!ul) return;
-  const sectionItems = sortByRank(items.filter(x => x.section === title));
+  const acceptedNames = SECTION_ALIASES[title] || [title];
+  const sectionItems = sortByRank(items.filter(x => acceptedNames.includes(x.section)));
   let html = "";
   for(const item of sectionItems){
     html += `<li>`;
@@ -538,12 +505,6 @@ function showError(message){
   });
 }
 
-/* ===== Stale-while-revalidate load =====
-   1. If we have a cached CSV from a previous visit, render from it
-      INSTANTLY (~0ms). User sees headlines immediately.
-   2. In parallel, fetch fresh data from Google Sheets.
-   3. When fresh data arrives, re-render quietly. New headlines
-      replace old ones in place. */
 const CACHE_KEY = "acrewire_csv_v1";
 
 function renderFromCSV(csv){
@@ -555,20 +516,13 @@ function renderFromCSV(csv){
 
 async function loadSheet(){
   let renderedFromCache = false;
-
-  // Step 1 — try cache first
   try{
     const cached = localStorage.getItem(CACHE_KEY);
     if(cached){
       renderFromCSV(cached);
       renderedFromCache = true;
     }
-  }catch(e){
-    // localStorage can fail in private mode etc. — fall through silently.
-  }
-
-  // Step 2 — fetch fresh in the background (browser may already
-  // have it warm from the <link rel=preload> in <head>).
+  }catch(e){}
   try{
     const response = await fetch(SHEET_CSV_URL);
     if(!response.ok) throw new Error("HTTP " + response.status);
